@@ -1,0 +1,27 @@
+# Виртуальное окружение
+.venv/
+venv/
+
+# Логи
+*.log
+
+# База данных (не стоит пушить в общий доступ)
+*.db
+
+# Кэш Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Конфиги с секретами
+.env
+.en
+
+# IDE (VS Code, PyCharm и др.)
+.vscode/
+.idea/
+
+# Системные файлы
+.DS_Store
+Thumbs.db
