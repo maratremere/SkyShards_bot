@@ -59,7 +59,7 @@ This bot is created solely for informational, educational, and entertainment pur
 ## Developer
 
 - **maratremere**  
-- GitHub: [https://github.com/maratremere](https://github.com/maratremere)
+- GitHub: [https://github.com/maratremere/SkyShards_bot](https://github.com/maratremere/SkyShards_bot)
 
 ---
 

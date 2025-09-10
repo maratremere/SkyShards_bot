@@ -60,7 +60,7 @@ Sky Shards Bot вычисляет местоположение, цвет и вр
 ## Разработчик
 
 - **maratremere**  
-- GitHub: [https://github.com/maratremere](https://github.com/maratremere)
+- GitHub: [https://github.com/maratremere/SkyShards_bot](https://github.com/maratremere/SkyShards_bot)
 
 ---
 
