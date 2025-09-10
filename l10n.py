@@ -133,7 +133,7 @@ TRANSLATIONS = {
             "В меню <b>Настроек</b> можно управлять уведомлениями, сменить язык и установить часовой пояс\n\n"
             "При первом запуске рекомендуется выбрать локальный часовой пояс, для корректной работы уведомлений\n\n"
             "<i>Бот создан исключительно в информационно-ознакомительных и развлекательных целях</i>\n\n"
-            'Разработчик: <b>maratremere</b>\n<b><a href="https://github.com/maratremere">Исходники на GitHub</a></b>'
+            'Разработчик: <b>maratremere</b>\n<b><a href="https://github.com/maratremere/SkyShards_bot">Исходники на GitHub</a></b>'
          
     },
     
@@ -264,7 +264,7 @@ TRANSLATIONS = {
             "In the <b>Settings</b> menu you can manage notifications, change the language, and set your time zone\n\n"
             "It is recommended to select your local time zone on the first launch to ensure correct notification times\n\n"            
             "<i>This bot was created solely for informational, educational, and entertainment purposes</i>\n\n"
-            'Developer: <b>maratremere</b>\n<b><a href=\"https://github.com/maratremere\">Source on GitHub</a></b>'
+            'Developer: <b>maratremere</b>\n<b><a href=\"https://github.com/maratremere/SkyShards_bot">Source on GitHub</a></b>'
         
     }
 }
