@@ -33,5 +33,6 @@ COPY . .
 
 # 9. Запуск бота с авто-перезапуском при изменении кода
 #CMD ["python", "-m", "watchgod", "--run", "python main.py"]
-CMD ["python", "run_tg_bot.py"]
+#CMD ["python", "run_tg_bot.py"]
+CMD ["python", "main.py"]
 
