@@ -16,8 +16,9 @@ load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 if not BOT_TOKEN:
-    raise RuntimeError("BOT_TOKEN not found. Please specify it in the .env file.")
-DB_FILE = "core/bot.db"
+    raise RuntimeError("BOT_TOKEN not found")
+
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 #Популярные таймзоны
 POPULAR_TIMEZONES = [

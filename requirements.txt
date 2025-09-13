@@ -4,3 +4,4 @@ pytz
 tzlocal
 watchgod==0.8.2
 python-dotenv==1.0.0
+psycopg2-binary

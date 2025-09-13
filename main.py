@@ -31,7 +31,7 @@ from config import (
     POPULAR_TIMEZONES, 
     PER_PAGE, 
     ALL_TIMEZONES, 
-    DB_FILE
+    DATABASE_URL
 )
 from core.db_utils import (
     init_db_sync,
@@ -61,11 +61,11 @@ class SkyShardsBot:
     mLg = None
     mTimezone = None
 
-    def __init__(self, db_file: str = DB_FILE):
+    def __init__(self, db_url: str = DATABASE_URL):
         self.bot = Bot(token=BOT_TOKEN)
-        self.db_file = db_file        
+        self.db_url = db_url        
         # Инициализируем DB
-        init_db_sync(self.db_file)
+        init_db_sync(self.db_url)
         self.mTimezone = LOCAL_TIMEZONE
         #Хранилище настроек в памяти (dict: user_id → dict с настройками)
         self.user_settings: dict[int, dict] = {}        
@@ -83,7 +83,7 @@ class SkyShardsBot:
         #Определяем язык пользователя — читаем из DB и если нет, используем telegram language
         user = update.effective_user
         chat = update.effective_chat
-        db_lang = await get_user_language(self.db_file, user_id)
+        db_lang = await get_user_language(self.db_url, user_id)
         lang_code = getattr(user, "language_code", None)
         simple_lang = None
         if lang_code:
@@ -95,11 +95,11 @@ class SkyShardsBot:
             self.mLg = lang.EN
         init_localizer(self.mLg)
         if db_lang is None:
-            await upsert_chat(self.db_file, user.id, chat.id, chosen_lang)
-            await set_user_language(self.db_file, user_id, chosen_lang)
+            await upsert_chat(self.db_url, user.id, chat.id, chosen_lang)
+            await set_user_language(self.db_url, user_id, chosen_lang)
 
         #Вывод базы данных
-        #conn = sqlite3.connect(DB_FILE)
+        #conn = sqlite3.connect(db_url)
         #rows = conn.execute("SELECT * FROM chats").fetchall()
         #print(rows)
         #logger.info(rows)
@@ -107,15 +107,15 @@ class SkyShardsBot:
         
         #Ищем часовой пояс пользователя в базе        
         user_id = update.effective_user.id
-        tz = await get_user_timezone(self.db_file, user_id)
+        tz = await get_user_timezone(self.db_url, user_id)
         if tz is not None:
             self.mTimezone = tz        
         
         #Значение настройки напоминаний
-        c_notif = await get_user_notify(self.db_file, user_id)
-        c_notif_mute = await get_user_notify_mute(self.db_file, user_id)
-        await set_user_notify(self.db_file, user_id, c_notif)
-        await set_user_notify_mute(self.db_file, user_id, c_notif_mute)
+        c_notif = await get_user_notify(self.db_url, user_id)
+        c_notif_mute = await get_user_notify_mute(self.db_url, user_id)
+        await set_user_notify(self.db_url, user_id, c_notif)
+        await set_user_notify_mute(self.db_url, user_id, c_notif_mute)
 
         text = f"/start - user_id={user_id} timezone={tz!r} lang={chosen_lang} notif={c_notif} notif_mute={c_notif_mute}"
         print(text) 
@@ -149,8 +149,8 @@ class SkyShardsBot:
     async def notify_on_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE): 
         self.mNotify = True 
         user_id = update.message.from_user.id
-        await set_user_notify(self.db_file, user_id, self.mNotify)
-        await set_user_notify_mute(self.db_file, user_id, False)
+        await set_user_notify(self.db_url, user_id, self.mNotify)
+        await set_user_notify_mute(self.db_url, user_id, False)
         await self.update_loc(user_id)
         mess = localizer.format_message('messages.shards_notif_on')  
         await update.message.reply_text(mess)
@@ -159,7 +159,7 @@ class SkyShardsBot:
     async def notify_off_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE): 
         self.mNotify = False
         user_id = update.message.from_user.id
-        await set_user_notify(self.db_file, user_id, self.mNotify)
+        await set_user_notify(self.db_url, user_id, self.mNotify)
         await self.update_loc(user_id)
         mess = localizer.format_message('messages.shards_notif_off')
         await update.message.reply_text(mess)
@@ -167,9 +167,9 @@ class SkyShardsBot:
     #Выключить все уведомления об осколках
     async def notify_mute_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):        
         user_id = update.message.from_user.id
-        await set_user_notify_mute(self.db_file, user_id, True)
+        await set_user_notify_mute(self.db_url, user_id, True)
         self.mNotify = False
-        await set_user_notify(self.db_file, user_id, self.mNotify)
+        await set_user_notify(self.db_url, user_id, self.mNotify)
         await self.update_loc(user_id)
         mess = localizer.format_message('messages.shards_notif_mute')
         await update.message.reply_text(mess)       
@@ -177,9 +177,9 @@ class SkyShardsBot:
     #Сменить язык
     async def change_language_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE): 
         user_id = update.message.from_user.id
-        current = await get_user_language(self.db_file, user_id)
+        current = await get_user_language(self.db_url, user_id)
         new_lang = 'en' if current == 'ru' else 'ru'
-        await set_user_language(self.db_file, user_id, new_lang)
+        await set_user_language(self.db_url, user_id, new_lang)
 
         if new_lang == 'ru':
             self.mLg = lang.RU
@@ -188,7 +188,7 @@ class SkyShardsBot:
         init_localizer(self.mLg)
 
         #обновить и перерисовать меню
-        chat_ids = await get_all_chat_ids(self.db_file)
+        chat_ids = await get_all_chat_ids(self.db_url)
         mchat_id = None
         if not chat_ids:
             return        
@@ -221,13 +221,13 @@ class SkyShardsBot:
 
     #обновить язык+таймзона из базы
     async def update_loc(self, user_id: int):        
-        current = await get_user_language(self.db_file, user_id)
+        current = await get_user_language(self.db_url, user_id)
         if current == 'ru':
             self.mLg = lang.RU
         else:
             self.mLg = lang.EN
         init_localizer(self.mLg)
-        tz = await get_user_timezone(self.db_file, user_id)
+        tz = await get_user_timezone(self.db_url, user_id)
         if tz is not None:
             self.mTimezone = tz
 
@@ -265,17 +265,17 @@ class SkyShardsBot:
     #Ежедневное утреннее уведомление в 11:00 по Asia/Tbilisi
     #Ежедневное утреннее уведомление в 00:00 по America/Los_Angeles
     async def morning_message(self):      
-        chat_ids = await get_all_chat_ids(self.db_file)
+        chat_ids = await get_all_chat_ids(self.db_url)
         if not chat_ids:
             return        
         for chat_id_n in chat_ids:
             try:
-                c_notif_mute = await get_user_notify_mute(self.db_file, chat_id_n)
+                c_notif_mute = await get_user_notify_mute(self.db_url, chat_id_n)
                 if c_notif_mute == False:
                     self.mNotify = True
                     #self.refresh_today_shard()
                     today_shard = ShardInfoPrint(self.mShard_info, self.mTimezone)
-                    await set_user_notify(self.db_file, chat_id_n, True)
+                    await set_user_notify(self.db_url, chat_id_n, True)
                     await self.update_loc(chat_id_n)
                     today_shards = today_shard.print_today_shard()  
                     text = f"{chat_id_n} - morning_message"
@@ -296,14 +296,14 @@ class SkyShardsBot:
         return main_info+realm
 
     async def shard_reminder_land(self):  
-        chat_ids = await get_all_chat_ids(self.db_file)
+        chat_ids = await get_all_chat_ids(self.db_url)
         if not chat_ids:
             return        
         for chat_id_n in chat_ids:
             try:
-                c_notif_mute = await get_user_notify_mute(self.db_file, chat_id_n)
+                c_notif_mute = await get_user_notify_mute(self.db_url, chat_id_n)
                 if c_notif_mute == False:
-                    c_notif = await get_user_notify(self.db_file, chat_id_n)
+                    c_notif = await get_user_notify(self.db_url, chat_id_n)
                     self.mNotify = c_notif
                     if self.mNotify:
                         await self.update_loc(chat_id_n)   
@@ -318,14 +318,14 @@ class SkyShardsBot:
                     logger.warning(f"Failed to send {chat_id_n}: {e}")     
 
     async def shard_reminder_end(self): 
-        chat_ids = await get_all_chat_ids(self.db_file)
+        chat_ids = await get_all_chat_ids(self.db_url)
         if not chat_ids:
             return        
         for chat_id_n in chat_ids:
             try:
-                c_notif_mute = await get_user_notify_mute(self.db_file, chat_id_n)
+                c_notif_mute = await get_user_notify_mute(self.db_url, chat_id_n)
                 if c_notif_mute == False:
-                    c_notif = await get_user_notify(self.db_file, chat_id_n)
+                    c_notif = await get_user_notify(self.db_url, chat_id_n)
                     self.mNotify = c_notif
                     if self.mNotify:              
                         await self.update_loc(chat_id_n)  
@@ -510,9 +510,9 @@ class SkyShardsBot:
     async def settings_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         user_id = update.message.from_user.id        
         await self.update_loc(user_id)
-        user_lang = await get_user_language(self.db_file, user_id)
-        c_notif = await get_user_notify(self.db_file, user_id)
-        c_notif_mute = await get_user_notify_mute(self.db_file, user_id)
+        user_lang = await get_user_language(self.db_url, user_id)
+        c_notif = await get_user_notify(self.db_url, user_id)
+        c_notif_mute = await get_user_notify_mute(self.db_url, user_id)
         reply_markup = self.build_settings_keyboard(c_notif, c_notif_mute, user_lang) 
         await update.message.reply_text(
             localizer.format_message('messages.settings_message'),
@@ -524,8 +524,8 @@ class SkyShardsBot:
     async def button_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         query = update.callback_query
         user_id = query.from_user.id
-        c_notif = await get_user_notify(self.db_file, user_id)
-        c_notif_mute = await get_user_notify_mute(self.db_file, user_id)
+        c_notif = await get_user_notify(self.db_url, user_id)
+        c_notif_mute = await get_user_notify_mute(self.db_url, user_id)
 
         #Обработка переключателя уведомлений
         if query.data == "toggle_notify":
@@ -533,11 +533,11 @@ class SkyShardsBot:
                 if c_notif:
                     c_notif = False
                     self.mNotify = c_notif
-                    await set_user_notify(self.db_file, user_id, c_notif)
+                    await set_user_notify(self.db_url, user_id, c_notif)
                 else:
                     c_notif = True
                     self.mNotify = c_notif
-                    await set_user_notify(self.db_file, user_id, c_notif)
+                    await set_user_notify(self.db_url, user_id, c_notif)
             else:
                 await query.answer()
                 return
@@ -548,21 +548,21 @@ class SkyShardsBot:
                 c_notif_mute = False
                 c_notif = True
                 self.mNotify = True
-                await set_user_notify(self.db_file, user_id, c_notif)
-                await set_user_notify_mute(self.db_file, user_id, c_notif_mute)
+                await set_user_notify(self.db_url, user_id, c_notif)
+                await set_user_notify_mute(self.db_url, user_id, c_notif_mute)
 
             else:
                 c_notif_mute = True
                 self.mNotify = False
                 c_notif = False
-                await set_user_notify(self.db_file, user_id, c_notif)
-                await set_user_notify_mute(self.db_file, user_id, c_notif_mute)
+                await set_user_notify(self.db_url, user_id, c_notif)
+                await set_user_notify_mute(self.db_url, user_id, c_notif_mute)
 
         #Обработка переключателя языка
         elif query.data == "toggle_lang":
-            current = await get_user_language(self.db_file, user_id)
+            current = await get_user_language(self.db_url, user_id)
             new_lang = 'en' if current == 'ru' else 'ru'
-            await set_user_language(self.db_file, user_id, new_lang)
+            await set_user_language(self.db_url, user_id, new_lang)
 
             if new_lang == 'ru':
                 self.mLg = lang.RU
@@ -586,7 +586,7 @@ class SkyShardsBot:
             return
 
         #Обновление сообщения с настройками
-        user_lang = await get_user_language(self.db_file, user_id)
+        user_lang = await get_user_language(self.db_url, user_id)
         await query.edit_message_text(
             text=localizer.format_message('messages.settings_message'),
             parse_mode="HTML",
@@ -654,7 +654,7 @@ class SkyShardsBot:
         if data.startswith("TZ|"):
             tz = data.split("|", 1)[1]
             #сохранить в БД
-            await set_user_timezone(self.db_file, query.from_user.id, tz)
+            await set_user_timezone(self.db_url, query.from_user.id, tz)
             self.mTimezone = tz
             await query.edit_message_text(localizer.format_message('messages.tz_save')+tz)
             return
@@ -721,13 +721,13 @@ class SkyShardsBot:
             simple_lang = None
             if lang_code:
                 simple_lang = 'ru' if lang_code.startswith('ru') else 'en'
-            await upsert_chat(self.db_file, user.id, chat.id, simple_lang)
+            await upsert_chat(self.db_url, user.id, chat.id, simple_lang)
 
     #Обновляем chat_id при callback
     async def callback_query_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         query = update.callback_query
         if query and query.from_user:
-            await upsert_chat(self.db_file, query.from_user.id, query.message.chat.id)
+            await upsert_chat(self.db_url, query.from_user.id, query.message.chat.id)
             await query.answer()
 
 # ------------ end class SkyShardsBot--------------------
