@@ -12,7 +12,7 @@ import logging
 
 # ----------------- TG BOT -----------------
 #Загружаем переменные окружения (.env)
-load_dotenv()
+#load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 if not BOT_TOKEN:
