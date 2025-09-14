@@ -66,7 +66,7 @@ TRANSLATIONS = {
             "p_no_shard": "Сегодня нет осколков",
             "darkness_fell": "✦ Тьма опустилась на ",
             "darkness_fell_last": "<i>(осколки скоро исчезнут)</i>",
-            "reward_red": "<b>Награда</b>: {amount} вознесённые свечи",
+            "reward_red": "<b>Награда</b>: {amount} Вознесённые свечи",
             "reward_black": "<b>Награда</b>: 4 тортика свечей",
             "timezone_info": "<i>Время указано для часового пояса: {timezone}</i>",
             "shards_notif_on": "Уведомления об осколках включены",
