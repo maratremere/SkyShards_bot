@@ -16,8 +16,8 @@ load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 if not BOT_TOKEN:
-        #print("Warning: BOT_TOKEN not found")
-        raise RuntimeError("BOT_TOKEN not found")
+        print("Warning: BOT_TOKEN not found")
+        #raise RuntimeError("BOT_TOKEN not found")
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
