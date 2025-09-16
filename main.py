@@ -69,7 +69,7 @@ class SkyShardsBot:
         self.mTimezone = LOCAL_TIMEZONE
         #Хранилище настроек в памяти (dict: user_id → dict с настройками)
         self.user_settings: dict[int, dict] = {}        
-        logger.info("init SkyShardsBot")
+        logger.info("__init__ SkyShardsBot")
         self.scheduler = AsyncIOScheduler(timezone=self.mTimezone)
         self.application = Application.builder().token(self.bot.token).build()
         self.refresh_today_shard()   
@@ -278,9 +278,9 @@ class SkyShardsBot:
                     await set_user_notify(self.db_url, chat_id_n, True)
                     await self.update_loc(chat_id_n)
                     today_shards = today_shard.print_today_shard()  
-                    text = f"{chat_id_n} - morning_message"
-                    print(text) 
-                    logger.info(text)
+                    #text = f"{chat_id_n} - morning_message"
+                    #print(text) 
+                    #logger.info(text)
                     await self.bot.send_message(
                             chat_id=chat_id_n, 
                             text=today_shards, 
@@ -478,7 +478,7 @@ class SkyShardsBot:
         self.application.post_shutdown = on_shutdown
 
         print("Start bot...")
-        logger.info("Start bot...")
+        #logger.info("Start bot...")
         self.application.run_polling(allowed_updates=Update.ALL_TYPES)
 # -------------------------------------------------------
 
