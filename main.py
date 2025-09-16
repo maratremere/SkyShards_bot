@@ -188,23 +188,24 @@ class SkyShardsBot:
         init_localizer(self.mLg)
 
         #обновить и перерисовать меню
-        chat_ids = await get_all_chat_ids(self.db_url)
-        mchat_id = None
-        if not chat_ids:
-            return        
-        for chat_id_n in chat_ids:
-            mchat_id = chat_id_n            
-
+        #chat_ids = await get_all_chat_ids(self.db_url)
+        #mchat_id = None
+        #if not chat_ids:
+        #    return        
+        #for chat_id_n in chat_ids:
+        #    mchat_id = chat_id_n
+        #             
+        #обновить и перерисовать меню
         commands = self.build_bot_commands()
         await self.application.bot.set_my_commands(
             commands=commands,
-            scope=BotCommandScopeChat(chat_id=mchat_id)
+            scope=BotCommandScopeChat(chat_id=user_id)
         )
         await update.message.reply_text(localizer.format_message('messages.settings_lang'))
 
     #Установить часовой пояс
     async def set_timezone_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        user_id = update.effective_user.id
+        #user_id = update.effective_user.id
         await update.message.reply_text(
             localizer.format_message('messages.tz_select'), 
             reply_markup=self.build_timezone_keyboard(0)
