@@ -64,10 +64,10 @@ class ShardInfoPrint:
         #Добавляем расписание
         times_info = self._format_shard_times()
         times_str = "\n".join(times_info)        
-        local_tz_name = self.tz
-        timezone_info = self.loc.format_message('messages.timezone_info', timezone=local_tz_name)        
- 
-        result_parts = [main_info, rewards_info, times_str, timezone_info+' (<i>'+date_str+')</i>']
+        #local_tz_name = self.tz
+        #timezone_info = self.loc.format_message('messages.timezone_info', timezone=local_tz_name) 
+        #result_parts = [main_info, rewards_info, times_str, timezone_info+' (<i>'+date_str+')</i>']
+        result_parts = [main_info, rewards_info, times_str]
         return "\n\n".join(result_parts)
     
     #Выводит полную информацию об осколках большим сообщением

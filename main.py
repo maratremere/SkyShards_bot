@@ -547,7 +547,7 @@ class SkyShardsBot:
         c_notif = await get_user_notify(self.db_url, user_id)
         c_notif_mute = await get_user_notify_mute(self.db_url, user_id)
         reply_markup = self.build_settings_keyboard(c_notif, c_notif_mute, user_lang) 
-        tz = await get_user_timezone(self.db_file, user_id)        
+        tz = await get_user_timezone(self.db_url, user_id)        
           
         settings_message = self.create_settings_message(c_notif, c_notif_mute, user_lang, tz)
         await update.message.reply_text(
@@ -622,10 +622,10 @@ class SkyShardsBot:
             return
 
         #Обновление сообщения с настройками
-        user_lang = await get_user_language(self.db_file, user_id)
-        c_notif = await get_user_notify(self.db_file, user_id)
-        c_notif_mute = await get_user_notify_mute(self.db_file, user_id)        
-        tz = await get_user_timezone(self.db_file, user_id)
+        user_lang = await get_user_language(self.db_url, user_id)
+        c_notif = await get_user_notify(self.db_url, user_id)
+        c_notif_mute = await get_user_notify_mute(self.db_url, user_id)        
+        tz = await get_user_timezone(self.db_url, user_id)
          
         settings_message = self.create_settings_message(c_notif, c_notif_mute, user_lang, tz)
         await query.edit_message_text(
