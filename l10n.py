@@ -135,17 +135,19 @@ TRANSLATIONS = {
         #О программе
         "about_message": 
         "<b>Sky Shards bot</b>\n\n"
-            "Вычисляет цвет, время и местоположение <b>Извержения Осколков</b> в игре 'Sky: Children of the Light'\n"
-            #"Отправляет уведомления во время начала падения осколков\n\n"
+            "Вычисляет цвет, время и местоположение <b>Извержения Осколков</b> в игре “Sky: Children of the Light”\n"
             "Бот отправляет уведомления в момент начала падения осколков, помогая быть в курсе событий и успевать реагировать\n\n"
             'Информация основана на вычислениях в веб-приложения <b><a href="https://sky-shards.pages.dev/">Sky Shards</a></b>\n\n'
-            "✦✦✦✦✦✦✦✦✦✦✦✦✦✦✦✦✦✦✦\n\n"
+            "✦✦✦✦✦✦✦✦✦✦✦✦✦\n\n"
             "<b>Бот отправляет два вида уведомлений:</b>\n"
             "• ежедневные уведомления о текущих Осколках в момент обновления дня в Sky\n"
             "• уведомление во время начала Извержения Осколков и за 30 минут до окончания события\n\n"
-            "В меню <b>Настроек</b> можно управлять уведомлениями, сменить язык и установить часовой пояс\n\n"
-            "При первом запуске рекомендуется выбрать локальный часовой пояс, для корректной работы уведомлений\n\n"
+            "В меню “Настройки” вы можете отключить уведомления на сегодняшний день или включить Тихий режим, "
+            "при котором все уведомления от бота будут отключены. Здесь также можно изменить язык и установить часовой пояс\n\n"
+            "При первом запуске рекомендуется выбрать локальный часовой пояс для корректной работы уведомлений\n\n"
+            "_______\n\n"
             "<i>Бот создан исключительно в информационно-ознакомительных и развлекательных целях</i>\n\n"
+            "<i>Данное приложение не связано с ThatGameCompany и Sky: Дети Света</i>\n\n"
             'Разработчик: <b>maratremere</b>\n<b><a href="https://github.com/maratremere/SkyShards_bot">Исходники на GitHub</a></b>'
          
     },
@@ -280,16 +282,19 @@ TRANSLATIONS = {
         #About
         "about_message": 
             "<b>Sky Shards Bot</b>\n\n"
-            "Calculates the color, timing and location of <b>Shard Eruptions</b> in the game 'Sky: Children of the Light'"
+            "Calculates the color, timing and location of <b>Shard Eruptions</b> in the game “Sky: Children of the Light“\n"
             "Sends notifications when shards begin to fall, helping stay informed and prepared\n\n"
             'Information is based on calculations from the web app <b><a href="https://sky-shards.pages.dev/">Sky Shards</a></b>\n\n'
-            "✦✦✦✦✦✦✦✦✦✦✦✦✦✦✦✦✦✦✦\n\n"
+            "✦✦✦✦✦✦✦✦✦✦✦✦✦\n\n"
             "<b>The bot sends two types of notifications:</b>\n"
             "• daily notifications about Shards at the start of the new Sky day\n"
             "• notifications when a Shard Eruption begins, and another one 30 minutes before the event ends\n\n"
-            "In the <b>Settings</b> menu you can manage notifications, change the language, and set your time zone\n\n"
-            "It is recommended to select your local time zone on the first launch to ensure correct notification times\n\n"            
+            "In the “Settings” menu, you can disable notifications for today or enable Silent Mode, "
+            "which turns off all notifications from the bot. You can also change the language and set the time zone here\n\n"
+            "It is recommended to select your local time zone on the first launch to ensure correct notification times\n\n"
+            "_______\n\n"            
             "<i>This bot was created solely for informational, educational, and entertainment purposes</i>\n\n"
+            "<i>This application is not affiliated with ThatGameCompany or Sky: Children of the Light</i>\n\n"
             'Developer: <b>maratremere</b>\n<b><a href=\"https://github.com/maratremere/SkyShards_bot">Source on GitHub</a></b>'
         
     }
