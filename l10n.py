@@ -77,11 +77,24 @@ TRANSLATIONS = {
             "settings_n_off": "💤 Выкл",
             "settings_n_mute": "🔔✨ Mute",#🕯💡🌟 ✨☀️🔅🔆
             "settings_n_mute_on": "🔕 Mute",
-            "settings_message": "<b>✦ Настройки ✦</b>\n\n"
-                                "➜ Уведомления на сегодня (вкл/выкл)\n"
-                                "➜ Тихий режим\n"
-                                "➜ Сменить язык (ru/en)\n"
-                                "➜ Установить часовой пояс",
+            
+            #"settings_message": "<b>✦ Настройки ✦</b>\n\n"
+            #                    "➜ Уведомления на сегодня (вкл/выкл)\n"
+            #                    "➜ Тихий режим\n"
+            #                    "➜ Сменить язык (ru/en)\n"
+            #                    "➜ Установить часовой пояс",                                
+            "settings_message_title":"<b>✦ Настройки ✦</b>\n\n",
+            "settings_message_notify":"➜ Уведомления на сегодня ",
+            "settings_message_notify_on":"(вкл)\n",
+            "settings_message_notify_off":"(выкл)\n",
+            "settings_message_mute":"➜ Тихий режим ",
+            "settings_message_mute_on":"(вкл)\n",
+            "settings_message_mute_off":"(выкл)\n",
+            "settings_message_lang":"➜ Сменить язык ",
+            "settings_message_lang_ru":"(ru)\n",
+            "settings_message_lang_en":"(en)\n",
+            "settings_message_timezone":"➜ Часовой пояс ",
+
             "settings_lang": "Язык переключен с EN → RU",
             "tz_select":"Выберите часовой пояс:",
             "tz_u_timezone1":"Ваш часовой пояс",
@@ -208,11 +221,24 @@ TRANSLATIONS = {
             "settings_n_off": "💤 Off",
             "settings_n_mute": "🔔✨ Mute",
             "settings_n_mute_on": "🔕 Mute",
-            "settings_message": "<b>✦ Settings ✦</b>\n\n"
-                                "➜ Notifications for today (on/off)\n"
-                                "➜ Silent mode\n"
-                                "➜ Change language (ru/en)\n"
-                                "➜ Set Timezone",
+
+            #"settings_message": "<b>✦ Settings ✦</b>\n\n"
+            #                    "➜ Notifications for today (on/off)\n"
+            #                    "➜ Silent mode\n"
+            #                    "➜ Change language (ru/en)\n"
+            #                    "➜ Set Timezone",                                
+            "settings_message_title":"<b>✦ Settings ✦</b>\n\n",
+            "settings_message_notify":"➜ Notifications for today ",
+            "settings_message_notify_on":"(on)\n",
+            "settings_message_notify_off":"(off)\n",
+            "settings_message_mute":"➜ Silent mode ",
+            "settings_message_mute_on":"(on)\n",
+            "settings_message_mute_off":"(off)\n",
+            "settings_message_lang":"➜ Change language ",
+            "settings_message_lang_ru":"(ru)\n",
+            "settings_message_lang_en":"(en)\n",
+            "settings_message_timezone":"➜ Timezone ",
+
             "settings_lang": "Language switched from RU → EN",
             "tz_select" : "Select timezone:",
             "tz_u_timezone1" : "Your timezone",

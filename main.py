@@ -506,6 +506,39 @@ class SkyShardsBot:
         ]
         return InlineKeyboardMarkup(keyboard)
 
+    #текст настроек
+    def create_settings_message(self, c_notif: bool, 
+                                c_notif_mute: bool, 
+                                user_lang: str | None = None,
+                                tz: str | None = None                                
+                                ) -> str:
+        n_on = localizer.format_message('messages.settings_message_notify_on') 
+        n_off = localizer.format_message('messages.settings_message_notify_off')
+        settings_notify = localizer.format_message('messages.settings_message_notify') 
+        notify_text = n_on if c_notif else n_off
+
+        n_mute_on = localizer.format_message('messages.settings_message_mute_on')
+        n_mute_off = localizer.format_message('messages.settings_message_mute_off')
+        settings_notify_mute = localizer.format_message('messages.settings_message_mute') 
+        notify_mute_text = n_mute_on if c_notif_mute else n_mute_off
+
+        n_l_ru = localizer.format_message('messages.settings_message_lang_ru')
+        n_l_en = localizer.format_message('messages.settings_message_lang_en')
+        settings_lang = localizer.format_message('messages.settings_message_lang') 
+        lang_text = n_l_ru if user_lang == "ru" else n_l_en
+        
+        settings_tz = localizer.format_message('messages.settings_message_timezone') 
+        tz_text = ""
+        if tz:
+            tz_text = f"{tz}"  
+        else:
+            tz_text = localizer.format_message('messages.tz_u_timezone2')
+
+        title = localizer.format_message('messages.settings_message_title') 
+        
+        settings_message = title + settings_notify + notify_text + settings_notify_mute + notify_mute_text + settings_lang + lang_text + settings_tz + tz_text
+        return settings_message
+    
     #Меню настроек
     async def settings_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         user_id = update.message.from_user.id        
@@ -514,8 +547,11 @@ class SkyShardsBot:
         c_notif = await get_user_notify(self.db_url, user_id)
         c_notif_mute = await get_user_notify_mute(self.db_url, user_id)
         reply_markup = self.build_settings_keyboard(c_notif, c_notif_mute, user_lang) 
+        tz = await get_user_timezone(self.db_file, user_id)        
+          
+        settings_message = self.create_settings_message(c_notif, c_notif_mute, user_lang, tz)
         await update.message.reply_text(
-            localizer.format_message('messages.settings_message'),
+            settings_message,
             parse_mode="HTML",  
             reply_markup=reply_markup
         ) 
@@ -586,9 +622,14 @@ class SkyShardsBot:
             return
 
         #Обновление сообщения с настройками
-        user_lang = await get_user_language(self.db_url, user_id)
+        user_lang = await get_user_language(self.db_file, user_id)
+        c_notif = await get_user_notify(self.db_file, user_id)
+        c_notif_mute = await get_user_notify_mute(self.db_file, user_id)        
+        tz = await get_user_timezone(self.db_file, user_id)
+         
+        settings_message = self.create_settings_message(c_notif, c_notif_mute, user_lang, tz)
         await query.edit_message_text(
-            text=localizer.format_message('messages.settings_message'),
+            settings_message,
             parse_mode="HTML",
             reply_markup=self.build_settings_keyboard(c_notif, c_notif_mute, user_lang)  
         )
