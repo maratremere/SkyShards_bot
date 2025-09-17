@@ -271,7 +271,7 @@ TRANSLATIONS = {
             "<b>/notify_on</b> — enable notifications\n"
             "<b>/notify_off</b> — disable notifications for today\n"  
             "<b>/notify_mute</b> — silent mode\n"         
-            "<b>/change_language</b>— change language\n"
+            "<b>/change_language</b> — change language\n"
             "<b>/set_timezone</b> — specify timezone\n"
             "<b>/info</b> — information about today's shards\n"
             "<b>/settings</b> — settings\n"
