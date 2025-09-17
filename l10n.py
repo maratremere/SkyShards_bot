@@ -5,6 +5,8 @@ class lang(Enum):
     RU = "ru"
     EN = "en"
 
+#skyshards_bot
+
 TRANSLATIONS = {
     "ru": {
         #Типы памяти
@@ -69,9 +71,9 @@ TRANSLATIONS = {
             "reward_red": "<b>Награда</b>: {amount} Вознесённые свечи",
             "reward_black": "<b>Награда</b>: 4 тортика свечей",
             "timezone_info": "<i>Время указано для часового пояса: {timezone}</i>",
-            "shards_notif_on": "Уведомления об осколках включены",
-            "shards_notif_off": "Уведомления об осколках на сегодня остановлены",
-            "shards_notif_mute": "Все уведомления отключены",
+            "shards_notif_on": "Оповещения об Осколках включены",
+            "shards_notif_off": "Оповещения об Осколках приостановлены до завтра",
+            "shards_notif_mute": "Все оповещения отключены",
             "settings_timezone": "Установить часовой пояс",
             "settings_n_on": "♥ Вкл", #❤🕓⏰ 🖤♥ ❤
             "settings_n_off": "💤 Выкл",
@@ -127,7 +129,7 @@ TRANSLATIONS = {
             "<b>/notify_mute</b> — тихий режим\n"
             "<b>/change_language</b> — сменить язык\n"
             "<b>/set_timezone</b> — указать часовой пояс\n"
-            "<b>/info</b> — инф о текущих осколках\n"
+            "<b>/info</b> — инф о текущих Осколках\n"
             "<b>/settings</b> — настройки\n"
             "<b>/help</b> — помощь\n"
             "<b>/about</b> — о программе"
@@ -136,7 +138,7 @@ TRANSLATIONS = {
         "about_message": 
         "<b>Sky Shards bot</b>\n\n"
             "Вычисляет цвет, время и местоположение <b>Извержения Осколков</b> в игре “Sky: Children of the Light”\n"
-            "Бот отправляет уведомления в момент начала падения осколков, помогая быть в курсе событий и успевать реагировать\n\n"
+            "Бот отправляет уведомления в момент начала падения Осколков, помогая быть в курсе событий и успевать реагировать\n\n"
             'Информация основана на вычислениях в веб-приложения <b><a href="https://sky-shards.pages.dev/">Sky Shards</a></b>\n\n'
             "✦✦✦✦✦✦✦✦✦✦✦✦✦\n\n"
             "<b>Бот отправляет два вида уведомлений:</b>\n"
@@ -215,9 +217,9 @@ TRANSLATIONS = {
             "reward_red": "<b>Reward</b>: {amount} Ascended Candles",
             "reward_black": "<b>Reward</b>: 4 Candle Cake",
             "timezone_info": "<i>Time shown in local timezone: {timezone}</i>",
-            "shards_notif_on": "Shard notifications are enabled",
-            "shards_notif_off": "Shard notifications are disabled for today",
-            "shards_notif_mute": "All notifications are disabled",
+            "shards_notif_on": "Shard notifications enabled",
+            "shards_notif_off": "Shard notifications paused for today",
+            "shards_notif_mute": "All notifications disabled",
             "settings_timezone": "Set Timezone",
             "settings_n_on": "♥ On",#⏰
             "settings_n_off": "💤 Off",
@@ -273,7 +275,7 @@ TRANSLATIONS = {
             "<b>/notify_mute</b> — silent mode\n"         
             "<b>/change_language</b> — change language\n"
             "<b>/set_timezone</b> — specify timezone\n"
-            "<b>/info</b> — information about today's shards\n"
+            "<b>/info</b> — information about today's Shards\n"
             "<b>/settings</b> — settings\n"
             "<b>/help</b> — available commands\n"
             "<b>/about</b> — about"
@@ -283,7 +285,7 @@ TRANSLATIONS = {
         "about_message": 
             "<b>Sky Shards Bot</b>\n\n"
             "Calculates the color, timing and location of <b>Shard Eruptions</b> in the game “Sky: Children of the Light”\n"
-            "Sends notifications when shards begin to fall, helping stay informed and prepared\n\n"
+            "Sends notifications when Shards begin to fall, helping stay informed and prepared\n\n"
             'Information is based on calculations from the web app <b><a href="https://sky-shards.pages.dev/">Sky Shards</a></b>\n\n'
             "✦✦✦✦✦✦✦✦✦✦✦✦✦\n\n"
             "<b>The bot sends two types of notifications:</b>\n"
