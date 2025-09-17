@@ -62,7 +62,7 @@ TRANSLATIONS = {
         
         #Текстовые сообщения
         "messages": {
-            "hello_message": "Привет! Я буду присылать уведомление о появлении осколков в игре Sky: Children of the Light",
+            "hello_message": "Привет! Я буду присылать уведомление о появлении осколков в игре “Sky: Children of the Light”",
             "p_no_shard": "Сегодня нет осколков",
             "darkness_fell": "✦ Тьма опустилась на ",
             "darkness_fell_last": "<i>(осколки скоро исчезнут)</i>",
@@ -208,7 +208,7 @@ TRANSLATIONS = {
         
         #Text messages
         "messages": {
-            "hello_message": "Hello! I will send you notifications about Shard Eruptions in the game Sky: Children of the Light",
+            "hello_message": "Hello! I will send you notifications about Shard Eruptions in the game “Sky: Children of the Light”",
             "p_no_shard": "No shards today",
             "darkness_fell": "✦ Darkness has fallen upon ",
             "darkness_fell_last": "<i>(the shards will soon disappear)</i>",
@@ -282,7 +282,7 @@ TRANSLATIONS = {
         #About
         "about_message": 
             "<b>Sky Shards Bot</b>\n\n"
-            "Calculates the color, timing and location of <b>Shard Eruptions</b> in the game “Sky: Children of the Light“\n"
+            "Calculates the color, timing and location of <b>Shard Eruptions</b> in the game “Sky: Children of the Light”\n"
             "Sends notifications when shards begin to fall, helping stay informed and prepared\n\n"
             'Information is based on calculations from the web app <b><a href="https://sky-shards.pages.dev/">Sky Shards</a></b>\n\n'
             "✦✦✦✦✦✦✦✦✦✦✦✦✦\n\n"
