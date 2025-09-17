@@ -85,7 +85,7 @@ TRANSLATIONS = {
             #                    "➜ Тихий режим\n"
             #                    "➜ Сменить язык (ru/en)\n"
             #                    "➜ Установить часовой пояс",                                
-            "settings_message_title":"<b>✦ Настройки ✦</b>\n\n",
+            "settings_message_title":"<b>✦ НАСТРОЙКИ ✦</b>\n\n",
             "settings_message_notify":"• Уведомления на сегодня ",
             "settings_message_notify_on":"(вкл)    \n",
             "settings_message_notify_off":"(выкл) \n",
@@ -122,7 +122,7 @@ TRANSLATIONS = {
         
         #Помощник
         "help_message": 
-            "<b>✦ Доступные команды ✦</b>\n\n"
+            "<b>✦ ДОСТУПНЫЕ КОМАНДЫ ✦</b>\n\n"
             "<b>/start</b> — запуск бота\n"
             "<b>/notify_on</b> — вкл уведомления\n"
             "<b>/notify_off</b> — откл увед. на сегодня\n"
@@ -231,7 +231,7 @@ TRANSLATIONS = {
             #                    "➜ Silent mode\n"
             #                    "➜ Change language (ru/en)\n"
             #                    "➜ Set Timezone",                                
-            "settings_message_title":"<b>✦ Settings ✦</b>\n\n",
+            "settings_message_title":"<b>✦ SETTINGS ✦</b>\n\n",
             "settings_message_notify":"• Notifications for today ",
             "settings_message_notify_on":"(on)              \n",
             "settings_message_notify_off":"(off)             \n",
@@ -268,7 +268,7 @@ TRANSLATIONS = {
         
         #Assistant
         "help_message": 
-            "<b>✦ Available commands ✦</b>\n\n"
+            "<b>✦ AVAILABLE COMMANDS ✦</b>\n\n"
             "<b>/start</b> — launch the bot\n"
             "<b>/notify_on</b> — enable notifications\n"
             "<b>/notify_off</b> — disable notifications for today\n"  
