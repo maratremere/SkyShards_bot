@@ -7,10 +7,10 @@ It sends notifications when shards begin to fall, helping players stay informed 
 
 ## Features
 
+- **Information** about current Shards
 - **Daily notifications** about Shards at the start of the new Sky day  
 - **Notifications when a Shard Eruption begins**  
 - **Notifications 30 minutes before the event ends**  
-- **Information** about current Shards
 - **Manage notifications and settings** directly in the bot  
 - **Change language** and **set your time zone**
 
