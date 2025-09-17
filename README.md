@@ -10,6 +10,7 @@ It sends notifications when shards begin to fall, helping players stay informed 
 - **Daily notifications** about Shards at the start of the new Sky day  
 - **Notifications when a Shard Eruption begins**  
 - **Notifications 30 minutes before the event ends**  
+- **Information** about current Shards
 - **Manage notifications and settings** directly in the bot  
 - **Change language** and **set your time zone**
 
@@ -41,7 +42,8 @@ It sends notifications when shards begin to fall, helping players stay informed 
 5. Set your local time zone using `/set_timezone`.  
 6. Use `/info` to get today's Shard information.  
 7. Access `/settings` for advanced options.  
-8. Use `/about` to view information about the bot, its purpose, and the developer.
+8. Use `/help` to see the list of available commands.
+9. Use `/about` to view information about the bot, its purpose, and the developer.
 ---
 
 ## Information Source
