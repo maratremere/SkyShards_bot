@@ -65,7 +65,7 @@ TRANSLATIONS = {
         #Текстовые сообщения
         "messages": {
             "hello_message": "Привет! Я буду присылать уведомление о появлении осколков в игре “Sky: Children of the Light”",
-            "p_no_shard": "Сегодня нет осколков",
+            "p_no_shard": "Сегодня нет ✦ осколков",
             "darkness_fell": "✦ Тьма опустилась на ",
             "darkness_fell_last": "<i>(осколки скоро исчезнут)</i>",
             "reward_red": "<b>Награда</b>: {amount} Вознесённые свечи",
@@ -211,7 +211,7 @@ TRANSLATIONS = {
         #Text messages
         "messages": {
             "hello_message": "Hello! I will send you notifications about Shard Eruptions in the game “Sky: Children of the Light”",
-            "p_no_shard": "No shards today",
+            "p_no_shard": "No ✦ shards today",
             "darkness_fell": "✦ Darkness has fallen upon ",
             "darkness_fell_last": "<i>(the shards will soon disappear)</i>",
             "reward_red": "<b>Reward</b>: {amount} Ascended Candles",
