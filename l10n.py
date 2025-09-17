@@ -63,8 +63,8 @@ TRANSLATIONS = {
         },
         
         #Текстовые сообщения
-        "messages": {
-            "hello_message": "Привет! Я буду присылать уведомление о появлении осколков в игре “Sky: Children of the Light”",
+        "messages": {#ПРИВЕТСТВУЮ ДОБРО ПОЖАЛОВАТЬ
+            "hello_message": "ПРИВЕТСТВУЮ В SKY SHARDS BOT ✦\nЯ буду присылать уведомление о появлении осколков в игре “Sky: Children of the Light”",
             "p_no_shard": "Сегодня нет ✦ осколков",
             "darkness_fell": "✦ Тьма опустилась на ",
             "darkness_fell_last": "<i>(осколки скоро исчезнут)</i>",
@@ -136,12 +136,12 @@ TRANSLATIONS = {
         ,        
         #О программе
         "about_message": 
-        "<b>Sky Shards bot</b>\n\n"
-            "Вычисляет цвет, время и местоположение <b>Извержения Осколков</b> в игре “Sky: Children of the Light”\n"
-            "Бот отправляет уведомления в момент начала падения Осколков, помогая быть в курсе событий и успевать реагировать\n\n"
+        "<b>SKY SHARDS BOT</b>\n\n"
+            "Вычисляет цвет, время и местоположение <b>Извержения Осколков</b> в игре “Sky: Children of the Light”\n\n"
+            "Отправляет уведомления в момент начала падения Осколков, помогая быть в курсе событий и успевать реагировать\n\n"
             'Информация основана на вычислениях в веб-приложения <b><a href="https://sky-shards.pages.dev/">Sky Shards</a></b>\n\n'
             "✦✦✦✦✦✦✦✦✦✦✦✦✦\n\n"
-            "<b>Бот отправляет два вида уведомлений:</b>\n"
+            "<b>Sky Shards bot отправляет два вида уведомлений:</b>\n"
             "• ежедневные уведомления о текущих Осколках в момент обновления дня в Sky\n"
             "• уведомление во время начала Извержения Осколков и за 30 минут до окончания события\n\n"
             "В меню “Настройки” вы можете отключить уведомления на сегодняшний день или включить Тихий режим, "
@@ -210,7 +210,7 @@ TRANSLATIONS = {
         
         #Text messages
         "messages": {
-            "hello_message": "Hello! I will send you notifications about Shard Eruptions in the game “Sky: Children of the Light”",
+            "hello_message": "WELCOME TO SKY SHARDS BOT ✦\nI will send you notifications about Shard Eruptions in the game “Sky: Children of the Light”",
             "p_no_shard": "No ✦ shards today",
             "darkness_fell": "✦ Darkness has fallen upon ",
             "darkness_fell_last": "<i>(the shards will soon disappear)</i>",
@@ -283,12 +283,12 @@ TRANSLATIONS = {
         
         #About
         "about_message": 
-            "<b>Sky Shards Bot</b>\n\n"
-            "Calculates the color, timing and location of <b>Shard Eruptions</b> in the game “Sky: Children of the Light”\n"
+            "<b>SKY SHARDS BOT</b>\n\n"
+            "Calculates the color, timing and location of <b>Shard Eruptions</b> in the game “Sky: Children of the Light”\n\n"
             "Sends notifications when Shards begin to fall, helping stay informed and prepared\n\n"
             'Information is based on calculations from the web app <b><a href="https://sky-shards.pages.dev/">Sky Shards</a></b>\n\n'
             "✦✦✦✦✦✦✦✦✦✦✦✦✦\n\n"
-            "<b>The bot sends two types of notifications:</b>\n"
+            "<b>Sky Shards bot sends two types of notifications:</b>\n"
             "• daily notifications about Shards at the start of the new Sky day\n"
             "• notifications when a Shard Eruption begins, and another one 30 minutes before the event ends\n\n"
             "In the “Settings” menu, you can disable notifications for today or enable Silent Mode, "
