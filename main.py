@@ -242,8 +242,8 @@ class SkyShardsBot:
         return
     
 # ----------------- Напоминания -----------------
-    #Ежедневное утреннее уведомление в 11:01 по Asia/Tbilisi
-    #Ежедневное утреннее уведомление в 00:01 по America/Los_Angeles
+    #Ежедневное утреннее уведомление в 11:00 по Asia/Tbilisi
+    #Ежедневное утреннее уведомление в 00:00 по America/Los_Angeles
     async def morning_message(self):      
         chat_ids = await get_all_chat_ids(self.db_url)
         if not chat_ids:
@@ -366,7 +366,8 @@ class SkyShardsBot:
         #утреннее уведомление   
         self.scheduler.add_job(
             self.morning_message,
-            CronTrigger(hour=0, minute=1, timezone=TIMEZONE),
+            CronTrigger(hour=0, minute=0, second=50, timezone=TIMEZONE),
+            #CronTrigger(hour=0, minute=1, timezone=TIMEZONE),
             #CronTrigger(hour=11+self.mDST, minute=1, timezone=self.mTimezone),
             id='morning_message'  
             )
