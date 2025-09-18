@@ -97,13 +97,6 @@ class SkyShardsBot:
         if db_lang is None:
             await upsert_chat(self.db_url, user.id, chat.id, chosen_lang)
             await set_user_language(self.db_url, user_id, chosen_lang)
-
-        #Вывод базы данных
-        #conn = sqlite3.connect(db_url)
-        #rows = conn.execute("SELECT * FROM chats").fetchall()
-        #print(rows)
-        #logger.info(rows)
-        #conn.close()        
         
         #Ищем часовой пояс пользователя в базе        
         user_id = update.effective_user.id
@@ -123,25 +116,20 @@ class SkyShardsBot:
 
         #Вывод основной информации
         hello_m = localizer.format_message('messages.hello_message')   
-        await update.message.reply_text(
-            hello_m
-        )
+        await update.message.reply_text(hello_m)
         self.refresh_today_shard() 
         today_shard = ShardInfoPrint(self.mShard_info, self.mTimezone)
         text_shard = today_shard.print_today_shard()
         await self.bot.send_message(chat_id=mchat_id, text=text_shard, parse_mode='HTML')
 
-        tx1 = localizer.format_message('messages.tz_u_timezone1')  
-        tx2 = localizer.format_message('messages.tz_u_timezone2')  
         tz_text = None
         if tz:
-            tz_text = f"<i>{tx1}: {tz}</i>"
-            await self.bot.send_message(chat_id=mchat_id, text=tz_text, parse_mode='HTML')
+            tx1 = localizer.format_message('messages.tz_u_timezone1')  
+            tz_text = f"<i>{tx1}: {tz}</i>"            
         else:
-            tz_text = f"<i>{tx1}: {tx2}</i>"
-            tx3 = localizer.format_message('messages.settings_timezone') 
-            tz_text2 = f"{tz_text}\n• {tx3} <b>/set_timezone</b> "
-            await self.bot.send_message(chat_id=mchat_id, text=tz_text2, parse_mode='HTML')
+            tx1 = localizer.format_message('messages.tz_select')
+            tz_text = f"<i>{tx1} <b>/set_timezone</b></i>"
+        await self.bot.send_message(chat_id=mchat_id, text=tz_text, parse_mode='HTML')
 
 # -------------------------------------------------------
 
@@ -186,15 +174,7 @@ class SkyShardsBot:
         else:
             self.mLg = lang.EN
         init_localizer(self.mLg)
-
-        #обновить и перерисовать меню
-        #chat_ids = await get_all_chat_ids(self.db_url)
-        #mchat_id = None
-        #if not chat_ids:
-        #    return        
-        #for chat_id_n in chat_ids:
-        #    mchat_id = chat_id_n
-        #             
+         
         #обновить и перерисовать меню
         commands = self.build_bot_commands()
         await self.application.bot.set_my_commands(
@@ -205,7 +185,6 @@ class SkyShardsBot:
 
     #Установить часовой пояс
     async def set_timezone_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        #user_id = update.effective_user.id
         await update.message.reply_text(
             localizer.format_message('messages.tz_select'), 
             reply_markup=self.build_timezone_keyboard(0)
@@ -263,8 +242,8 @@ class SkyShardsBot:
         return
     
 # ----------------- Напоминания -----------------
-    #Ежедневное утреннее уведомление в 11:00 по Asia/Tbilisi
-    #Ежедневное утреннее уведомление в 00:00 по America/Los_Angeles
+    #Ежедневное утреннее уведомление в 11:01 по Asia/Tbilisi
+    #Ежедневное утреннее уведомление в 00:01 по America/Los_Angeles
     async def morning_message(self):      
         chat_ids = await get_all_chat_ids(self.db_url)
         if not chat_ids:
@@ -279,9 +258,6 @@ class SkyShardsBot:
                     await set_user_notify(self.db_url, chat_id_n, True)
                     await self.update_loc(chat_id_n)
                     today_shards = today_shard.print_today_shard()  
-                    #text = f"{chat_id_n} - morning_message"
-                    #print(text) 
-                    #logger.info(text)
                     await self.bot.send_message(
                             chat_id=chat_id_n, 
                             text=today_shards, 
@@ -342,7 +318,7 @@ class SkyShardsBot:
     
     #Ежедневные сообщения напоминания про осколки в 3 временных рамки
     def setup_schedule(self):
-        #сначала очищаем старые напоминания
+        #очищаем старые напоминания
         try:
             self.scheduler.remove_job('morning_message')
         except Exception:
@@ -387,16 +363,13 @@ class SkyShardsBot:
                     id=f'shard_reminder_end_{i}'
                 )
 
+        #утреннее уведомление   
         self.scheduler.add_job(
             self.morning_message,
             CronTrigger(hour=0, minute=1, timezone=TIMEZONE),
             #CronTrigger(hour=11+self.mDST, minute=1, timezone=self.mTimezone),
             id='morning_message'  
             )
-            
-        #Ежедневное утреннее уведомление        
-        #self.morning_message()
-        #asyncio.create_task(self.morning_message())
 
 # -------------------------------------------------------
     def setup_handlers(self):
@@ -462,15 +435,13 @@ class SkyShardsBot:
 
 # ----------------- RUN -----------------
     def run(self):
-        self.setup_schedule()        
-        #self.scheduler.add_job(self.setup_schedule, 'cron', hour=0, minute=0)
+        self.setup_schedule() 
         self.scheduler.add_job(self.setup_schedule, CronTrigger(hour=0, minute=0, timezone=TIMEZONE))
         self.setup_handlers()
 
         async def on_startup(application):
             await self.startup(application)
-            await self.set_bot_commands()
-            #logger.info(f"Scheduler: {self.scheduler.running}")  
+            await self.set_bot_commands()            
 
         async def on_shutdown(application):
             await self.shutdown(application)
@@ -479,7 +450,6 @@ class SkyShardsBot:
         self.application.post_shutdown = on_shutdown
 
         print("Start bot...")
-        #logger.info("Start bot...")
         self.application.run_polling(allowed_updates=Update.ALL_TYPES)
 # -------------------------------------------------------
 
