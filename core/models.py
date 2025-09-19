@@ -20,7 +20,7 @@ class ShardInfoPrint:
         self.loc = localizer
         self.tz = timezone
 
-    #Форматирует информацию о наградах за осколки.
+    #Форматирует информацию о наградах за осколки
     def _format_shard_rewards(self) -> str:    
         if self.info.is_red:
             #Красные осколки дают вознесенные свечи
@@ -41,11 +41,11 @@ class ShardInfoPrint:
             #Конвертируем время в локальную временную зону
             land_time_local = occurrence.land.astimezone(local_tz).strftime('%H:%M')
             end_time_local = occurrence.end.astimezone(local_tz).strftime('%H:%M')            
-            time_strings.append(f"• {ordinal}:\t\t\t{land_time_local} - {end_time_local}")
+            time_strings.append(f"• {ordinal}:   {land_time_local} - {end_time_local}")
             
         return time_strings
     
-    #Сообщение об отсутствии осколков.
+    #Сообщение об отсутствии осколков
     def _render_no_shard(self) -> str:       
         return self.loc.format_message('messages.p_no_shard')
     
@@ -54,7 +54,7 @@ class ShardInfoPrint:
         shard_type = self.loc.get_shard_type(self.info.is_red)
         realm_name = self.loc.get_realm_name(self.info.realm)
         map_name = self.loc.get_map_name(self.info.map_name)
-        date_str = self.info.date.strftime('%d.%m.%Y')                
+        #date_str = self.info.date.strftime('%d.%m.%Y')                
         main_info = f"{shard_type} {map_name} ({realm_name})"
         if self.loc.language == lang.EN:
             main_info = f"{shard_type} in {map_name} ({realm_name})"
@@ -65,10 +65,12 @@ class ShardInfoPrint:
         times_info = self._format_shard_times()
         times_str = "\n".join(times_info)        
         #local_tz_name = self.tz
-        #timezone_info = self.loc.format_message('messages.timezone_info', timezone=local_tz_name) 
-        #result_parts = [main_info, rewards_info, times_str, timezone_info+' (<i>'+date_str+')</i>']
+        #timezone_info = self.loc.format_message('messages.timezone_info', timezone=local_tz_name)
+        #main_text = f"{main_info}\n{rewards_info}\n\n{times_str}"
         result_parts = [main_info, rewards_info, times_str]
+        #result_parts = [main_info, rewards_info, times_str, timezone_info+' (<i>'+date_str+')</i>']
         return "\n\n".join(result_parts)
+        #return main_text
     
     #Выводит полную информацию об осколках большим сообщением
     def render(self) -> str:           
@@ -88,8 +90,8 @@ class ShardInfoPrint:
             return self.loc.get('messages.reward_black')
     
     #Выводит информацию об отсутвии осколков
-    def _print_no_shard(self) -> str:           
-        return self.loc.get('messages.p_no_shard')
+    #def _print_no_shard(self) -> str:           
+    #    return self.loc.get('messages.p_no_shard')
     
     #Выводит информацию об осколках
     def _print_shards(self) -> str:                 
@@ -107,9 +109,54 @@ class ShardInfoPrint:
     #Выводит какие и где сегодня осколки, коротко
     def print_today_shard(self) -> str:     
         if not self.info.has_shard:
-            return self._print_no_shard()
+            return self._render_no_shard()
         else:
             return self._print_shards()
+    
+    #Форматирует информацию о наградах
+    def _format_morning_shard_rewards(self) -> str:    
+        if self.info.is_red:
+            ac_amount = self.info.reward_ac or 0           
+            reward_text = self.loc.format_message('messages.reward_m_red', amount=ac_amount)
+            return reward_text
+        else:
+            return self.loc.format_message('messages.reward_m_black')
+        
+    #Форматирует времена появления утренних осколков
+    def _format_morning_shard_times(self) -> List[str]:    
+        time_strings = []        
+        l_tz = pytz.timezone(self.tz)
+        local_tz = datetime.now(l_tz).tzinfo        
+        for i, occurrence in enumerate(self.info.occurrences): # • • • - – — ✦            
+            land = occurrence.land.astimezone(local_tz).strftime('%H:%M')
+            end = occurrence.end.astimezone(local_tz).strftime('%H:%M')            
+            time_strings.append(f"{land}-{end}")            
+        return time_strings
+    
+    #Информация о дне с осколками.
+    def _print_morning_shards(self) -> str:  
+        shard_type = self.loc.get_shard_type(self.info.is_red)
+        realm_name = self.loc.get_realm_name(self.info.realm)
+        map_name = self.loc.get_map_name(self.info.map_name)
+
+        main_info = f"{shard_type} {map_name} ({realm_name})"
+        if self.loc.language == lang.EN:
+            main_info = f"{shard_type} in {map_name} ({realm_name})"
+
+        rewards_info = self._format_morning_shard_rewards() 
+        times_info = self._format_morning_shard_times()
+        times_str = " | ".join(times_info)               
+
+        main_text = f"{main_info}   {rewards_info}\n{times_str}"
+
+        return main_text
+
+    #Выводит утреннее сообщение
+    def print_morning_shard(self) -> str:     
+        if not self.info.has_shard:
+            return self._render_no_shard()
+        else:
+            return self._print_morning_shards()
 # -------------------------------------------------------
 
 # ----------------- FUNCTIONS -----------------

@@ -64,12 +64,14 @@ TRANSLATIONS = {
         
         #Текстовые сообщения
         "messages": {#ПРИВЕТСТВУЮ ДОБРО ПОЖАЛОВАТЬ
-            "hello_message": "ПРИВЕТСТВУЮ В SKY SHARDS BOT ✦\nЯ буду присылать уведомление о появлении осколков в игре “Sky: Children of the Light”",
+            "hello_message": "ПРИВЕТСТВУЮ В SKY SHARDS BOT ✦\n\nЯ буду присылать уведомление о появлении осколков в игре “Sky: Children of the Light”",
             "p_no_shard": "Сегодня нет ✦ осколков",
             "darkness_fell": "✦ Тьма опустилась на ",
             "darkness_fell_last": "<i>(осколки скоро исчезнут)</i>",
-            "reward_red": "<b>Награда</b>: {amount} Вознесённые свечи",
-            "reward_black": "<b>Награда</b>: 4 тортика свечей",
+            "reward_red": "<b>Награда</b>: {amount} Вознесённые Свечки",
+            "reward_m_red": "<b>[{amount} Свечки]</b>",#🎂🕯️
+            "reward_black": "<b>Награда</b>: 4 Тортика Свечей",
+            "reward_m_black": "<b>[4 Тортика]</b>",
             "timezone_info": "<i>Время указано для часового пояса: {timezone}</i>",
             "shards_notif_on": "Оповещения об Осколках включены",
             "shards_notif_off": "Оповещения об Осколках приостановлены до завтра",
@@ -210,12 +212,14 @@ TRANSLATIONS = {
         
         #Text messages
         "messages": {
-            "hello_message": "WELCOME TO SKY SHARDS BOT ✦\nI will send you notifications about Shard Eruptions in the game “Sky: Children of the Light”",
+            "hello_message": "WELCOME TO SKY SHARDS BOT ✦\n\nI will send you notifications about Shard Eruptions in the game “Sky: Children of the Light”",
             "p_no_shard": "No ✦ shards today",
             "darkness_fell": "✦ Darkness has fallen upon ",
             "darkness_fell_last": "<i>(the shards will soon disappear)</i>",
             "reward_red": "<b>Reward</b>: {amount} Ascended Candles",
+            "reward_m_red": "<b>[{amount} Candles]</b>",            
             "reward_black": "<b>Reward</b>: 4 Candle Cake",
+            "reward_m_black": "<b>[4 Candle Cake]</b>",
             "timezone_info": "<i>Time shown in local timezone: {timezone}</i>",
             "shards_notif_on": "Shard notifications enabled",
             "shards_notif_off": "Shard notifications paused for today",

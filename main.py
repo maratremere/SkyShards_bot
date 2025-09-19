@@ -257,7 +257,8 @@ class SkyShardsBot:
                     today_shard = ShardInfoPrint(self.mShard_info, self.mTimezone)
                     await set_user_notify(self.db_url, chat_id_n, True)
                     await self.update_loc(chat_id_n)
-                    today_shards = today_shard.print_today_shard()  
+                    #today_shards = today_shard.print_today_shard() 
+                    today_shards = today_shard.print_morning_shard() 
                     await self.bot.send_message(
                             chat_id=chat_id_n, 
                             text=today_shards, 
