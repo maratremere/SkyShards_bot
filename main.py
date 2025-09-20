@@ -4,7 +4,8 @@ from telegram import (
     InlineKeyboardButton, 
     InlineKeyboardMarkup, 
     BotCommand, 
-    BotCommandScopeChat
+    BotCommandScopeChat, 
+    ReplyKeyboardMarkup
 )
 from telegram.ext import (
     Application, 
@@ -18,10 +19,11 @@ from telegram.ext import (
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 from datetime import datetime, timedelta, time
-from l10n import lang, localizer, init_localizer
+from l10n import lang, localizer, init_localizer, TRANSLATIONS
 import pytz
 import math
 import os
+import re
 
 from config import (
     BOT_TOKEN, 
@@ -116,7 +118,12 @@ class SkyShardsBot:
 
         #Вывод основной информации
         hello_m = localizer.format_message('messages.hello_message')   
-        await update.message.reply_text(hello_m)
+        #кнопка ReplyKeyboard
+        r_key = await self.get_reply_key(user_id)
+        await update.message.reply_text(
+            hello_m,
+            reply_markup=ReplyKeyboardMarkup(r_key, resize_keyboard=True) 
+        )
         self.refresh_today_shard() 
         today_shard = ShardInfoPrint(self.mShard_info, self.mTimezone)
         text_shard = today_shard.print_today_shard()
@@ -132,7 +139,16 @@ class SkyShardsBot:
         await self.bot.send_message(chat_id=mchat_id, text=tz_text, parse_mode='HTML')
 
 # -------------------------------------------------------
-
+    #обновить и вернуть текст кнопки
+    async def get_reply_key(self, user_id: int)->list[list[str]]:
+        r_key = None
+        c_notif = await get_user_notify(self.db_url, user_id)
+        if c_notif == True:
+            r_key = [[localizer.format_message('BUTTON_TEXTS.b_notify_off')]]  
+        else:
+            r_key = [[localizer.format_message('BUTTON_TEXTS.b_notify_on')]]
+        return r_key
+    
     #Включить уведомления об осколках 
     async def notify_on_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE): 
         self.mNotify = True 
@@ -141,7 +157,11 @@ class SkyShardsBot:
         await set_user_notify_mute(self.db_url, user_id, False)
         await self.update_loc(user_id)
         mess = localizer.format_message('messages.shards_notif_on')  
-        await update.message.reply_text(mess)
+        r_key = await self.get_reply_key(user_id) 
+        await update.message.reply_text(
+            mess,
+            reply_markup=ReplyKeyboardMarkup(r_key, resize_keyboard=True)
+            )  
 
     #Выключить уведомления об осколках
     async def notify_off_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE): 
@@ -150,7 +170,11 @@ class SkyShardsBot:
         await set_user_notify(self.db_url, user_id, self.mNotify)
         await self.update_loc(user_id)
         mess = localizer.format_message('messages.shards_notif_off')
-        await update.message.reply_text(mess)
+        r_key = await self.get_reply_key(user_id) 
+        await update.message.reply_text(
+            mess,
+            reply_markup=ReplyKeyboardMarkup(r_key, resize_keyboard=True)
+            ) 
 
     #Выключить все уведомления об осколках
     async def notify_mute_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):        
@@ -160,7 +184,11 @@ class SkyShardsBot:
         await set_user_notify(self.db_url, user_id, self.mNotify)
         await self.update_loc(user_id)
         mess = localizer.format_message('messages.shards_notif_mute')
-        await update.message.reply_text(mess)       
+        r_key = await self.get_reply_key(user_id) 
+        await update.message.reply_text(
+            mess,
+            reply_markup=ReplyKeyboardMarkup(r_key, resize_keyboard=True)
+            )        
 
     #Сменить язык
     async def change_language_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE): 
@@ -181,7 +209,12 @@ class SkyShardsBot:
             commands=commands,
             scope=BotCommandScopeChat(chat_id=user_id)
         )
-        await update.message.reply_text(localizer.format_message('messages.settings_lang'))
+        #обновить и перерисовать кнопку
+        r_key = await self.get_reply_key(user_id) 
+        await update.message.reply_text(
+            localizer.format_message('messages.settings_lang'),
+            reply_markup=ReplyKeyboardMarkup(r_key, resize_keyboard=True)
+            )
 
     #Установить часовой пояс
     async def set_timezone_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -395,13 +428,23 @@ class SkyShardsBot:
         self.application.add_handler(
             CallbackQueryHandler(
                 self.button_handler,
-                pattern=r'^(toggle_notify|toggle_notify_mute|toggle_lang|toggle_timezone|set_timezone|open_settings)$'
+                pattern=r'^(toggle_notify_mute|toggle_lang|toggle_timezone|set_timezone|open_settings)$'
             )
         )
         
         #общий fallback для callback'ов — регистрируется последним
         #этот хендлер будет вызываться, если ни один из выше не подошёл
         self.application.add_handler(CallbackQueryHandler(self.callback_query_handler))
+
+        # обработчик кнопки ReplyKeyboard
+        r_key_on_ru = TRANSLATIONS["ru"]["BUTTON_TEXTS"]["b_notify_on"]
+        r_key_off_ru = TRANSLATIONS["ru"]["BUTTON_TEXTS"]["b_notify_off"]
+        r_key_on_en = TRANSLATIONS["en"]["BUTTON_TEXTS"]["b_notify_on"]
+        r_key_off_en = TRANSLATIONS["en"]["BUTTON_TEXTS"]["b_notify_off"]
+
+        all_button_texts = [r_key_on_ru, r_key_off_ru, r_key_on_en, r_key_off_en]
+        pattern = "^(" + "|".join(map(re.escape, all_button_texts)) + ")$"
+        self.application.add_handler(MessageHandler(filters.TEXT & filters.Regex(pattern), self.reply_button_handler))
 
         # --- MessageHandlers ---
         #текст для поиска TZ: ловим ТОЛЬКО обычный текст (не команды)
@@ -458,20 +501,16 @@ class SkyShardsBot:
 # ----------------- МЕНЮ И КНОПКИ НАСТРОЕК -----------------
     #Создаём inline-клавиатуру
     def build_settings_keyboard(
-            self, c_notif: bool, c_notif_mute: bool, 
+            self, c_notif_mute: bool, 
             lang_code: str | None = None
         ) -> InlineKeyboardMarkup:
-        n_on = localizer.format_message('messages.settings_n_on') 
-        n_off = localizer.format_message('messages.settings_n_off')
         n_mute = localizer.format_message('messages.settings_n_mute')
         n_mute_on = localizer.format_message('messages.settings_n_mute_on')
-        notify_text = n_on if c_notif else n_off
         notify_mute_text = n_mute_on if c_notif_mute else n_mute
         lang_text = "🌐 RU" if lang_code == "ru" else "🌐 EN"
         timezone_text = localizer.format_message('messages.settings_timezone')  
         keyboard = [
             [
-                InlineKeyboardButton(notify_text, callback_data="toggle_notify"),
                 InlineKeyboardButton(notify_mute_text, callback_data="toggle_notify_mute"),
                 InlineKeyboardButton(lang_text, callback_data="toggle_lang")
             ],
@@ -529,43 +568,73 @@ class SkyShardsBot:
             reply_markup=reply_markup
         ) 
 
+    #Обработчик кнопки ReplyKeyboard
+    async def reply_button_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        try:
+            #удаляет сообщение с текстом кнопки
+            await update.message.delete()  
+        except:
+            pass
+
+        user_id = update.message.from_user.id
+        text = update.message.text
+        key_on = localizer.format_message('BUTTON_TEXTS.b_notify_on') 
+        key_off = localizer.format_message('BUTTON_TEXTS.b_notify_off') 
+        r_key_on = [[key_on]] 
+        r_key_off = [[key_off]] 
+        if text == key_on:
+            keyboard = r_key_off
+            self.mNotify = True             
+            await set_user_notify(self.db_file, user_id, self.mNotify)
+            await set_user_notify_mute(self.db_file, user_id, False)
+            await self.update_loc(user_id)
+            mess = localizer.format_message('messages.shards_notif_on')       
+            await update.message.reply_text(
+                mess,
+                reply_markup=ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
+            )
+
+        elif text == key_off:
+            keyboard = r_key_on
+            self.mNotify = False
+            await set_user_notify(self.db_file, user_id, self.mNotify)
+            await self.update_loc(user_id)
+            mess = localizer.format_message('messages.shards_notif_off')
+            await update.message.reply_text(
+                mess,
+                reply_markup=ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
+            )
+
     #Обработка кнопок настройки
     async def button_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         query = update.callback_query
         user_id = query.from_user.id
         c_notif = await get_user_notify(self.db_url, user_id)
         c_notif_mute = await get_user_notify_mute(self.db_url, user_id)
-
-        #Обработка переключателя уведомлений
-        if query.data == "toggle_notify":
-            if c_notif_mute == False:
-                if c_notif:
-                    c_notif = False
-                    self.mNotify = c_notif
-                    await set_user_notify(self.db_url, user_id, c_notif)
-                else:
-                    c_notif = True
-                    self.mNotify = c_notif
-                    await set_user_notify(self.db_url, user_id, c_notif)
-            else:
-                await query.answer()
-                return
            
         #Обработка переключателя тихого режима
-        elif query.data == "toggle_notify_mute":
+        if query.data == "toggle_notify_mute":
             if c_notif_mute:
                 c_notif_mute = False
                 c_notif = True
                 self.mNotify = True
                 await set_user_notify(self.db_url, user_id, c_notif)
                 await set_user_notify_mute(self.db_url, user_id, c_notif_mute)
-
+                mess = localizer.format_message('messages.shards_notif_on')
             else:
                 c_notif_mute = True
                 self.mNotify = False
                 c_notif = False
                 await set_user_notify(self.db_url, user_id, c_notif)
                 await set_user_notify_mute(self.db_url, user_id, c_notif_mute)
+                mess = localizer.format_message('messages.shards_notif_mute')
+
+            r_key = await self.get_reply_key(user_id) 
+            await context.bot.send_message(
+                chat_id=user_id,
+                text=mess,
+                reply_markup=ReplyKeyboardMarkup(r_key, resize_keyboard=True)
+                )
 
         #Обработка переключателя языка
         elif query.data == "toggle_lang":
@@ -584,6 +653,12 @@ class SkyShardsBot:
                 commands=commands,
                 scope=BotCommandScopeChat(chat_id=update.effective_chat.id)
             )
+            r_key = await self.get_reply_key(user_id) 
+            await context.bot.send_message(
+                chat_id=user_id,
+                text=localizer.format_message('messages.settings_lang'),
+                reply_markup=ReplyKeyboardMarkup(r_key, resize_keyboard=True)
+                )
         
         #Обработка часового пояса
         elif query.data == "toggle_timezone":
@@ -604,7 +679,7 @@ class SkyShardsBot:
         await query.edit_message_text(
             settings_message,
             parse_mode="HTML",
-            reply_markup=self.build_settings_keyboard(c_notif, c_notif_mute, user_lang)  
+            reply_markup=self.build_settings_keyboard(c_notif_mute, user_lang)  
         )
         await query.answer()
 

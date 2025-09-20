@@ -77,10 +77,10 @@ TRANSLATIONS = {
             "shards_notif_off": "Оповещения об Осколках приостановлены до завтра",
             "shards_notif_mute": "Все оповещения отключены",
             "settings_timezone": "Установить часовой пояс",
-            "settings_n_on": "♥ Вкл", #❤🕓⏰ 🖤♥ ❤
-            "settings_n_off": "💤 Выкл",
-            "settings_n_mute": "🔔✨ Mute",#🕯💡🌟 ✨☀️🔅🔆
-            "settings_n_mute_on": "🔕 Mute",
+            #"settings_n_on": "♥ Вкл", #❤🕓⏰ 🖤♥ ❤
+            #"settings_n_off": "💤 Выкл",
+            "settings_n_mute": "🔔 Тихий режим",#🕯💡🌟 ✨☀️🔅🔆
+            "settings_n_mute_on": "🔕 Тихий режим",
             
             #"settings_message": "<b>✦ Настройки ✦</b>\n\n"
             #                    "➜ Уведомления на сегодня (вкл/выкл)\n"
@@ -120,6 +120,12 @@ TRANSLATIONS = {
             "m_settings": "Настройки",
             "m_help": "Помощь",
             "m_about": "О программе"        
+        },
+
+        #кнопка
+        "BUTTON_TEXTS": {
+            "b_notify_on": "Включить оповещения об Осколках",   
+            "b_notify_off": "Отключить оповещения об Осколках"      
         },
         
         #Помощник
@@ -225,10 +231,10 @@ TRANSLATIONS = {
             "shards_notif_off": "Shard notifications paused for today",
             "shards_notif_mute": "All notifications disabled",
             "settings_timezone": "Set Timezone",
-            "settings_n_on": "♥ On",#⏰
-            "settings_n_off": "💤 Off",
-            "settings_n_mute": "🔔✨ Mute",
-            "settings_n_mute_on": "🔕 Mute",
+            #"settings_n_on": "♥ On",#⏰
+            #"settings_n_off": "💤 Off",
+            "settings_n_mute": "🔔✨ Silent mode",
+            "settings_n_mute_on": "🔕 Silent mode",
 
             #"settings_message": "<b>✦ Settings ✦</b>\n\n"
             #                    "➜ Notifications for today (on/off)\n"
@@ -268,6 +274,12 @@ TRANSLATIONS = {
             "m_settings": "Settings",
             "m_help": "Help",
             "m_about": "About"         
+        },
+
+        # button
+        "BUTTON_TEXTS": {
+            "b_notify_on": "Enable Shard Notifications",
+            "b_notify_off": "Disable Shard Notifications"
         },
         
         #Assistant

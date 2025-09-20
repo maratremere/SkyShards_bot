@@ -89,10 +89,6 @@ class ShardInfoPrint:
             #Черные осколки дают тортики свечей
             return self.loc.get('messages.reward_black')
     
-    #Выводит информацию об отсутвии осколков
-    #def _print_no_shard(self) -> str:           
-    #    return self.loc.get('messages.p_no_shard')
-    
     #Выводит информацию об осколках
     def _print_shards(self) -> str:                 
         shard_type = self.loc.get_shard_type(self.info.is_red)
@@ -106,7 +102,7 @@ class ShardInfoPrint:
         result = [main_info, rewards_info]                   
         return "\n".join(result)
     
-    #Выводит какие и где сегодня осколки, коротко
+    #Выводит какие и где сегодня осколки, при старте
     def print_today_shard(self) -> str:     
         if not self.info.has_shard:
             return self._render_no_shard()
@@ -133,7 +129,7 @@ class ShardInfoPrint:
             time_strings.append(f"{land}-{end}")            
         return time_strings
     
-    #Информация о дне с осколками.
+    #Информация о дне с осколками
     def _print_morning_shards(self) -> str:  
         shard_type = self.loc.get_shard_type(self.info.is_red)
         realm_name = self.loc.get_realm_name(self.info.realm)
