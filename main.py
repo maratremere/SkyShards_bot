@@ -558,7 +558,7 @@ class SkyShardsBot:
         user_lang = await get_user_language(self.db_url, user_id)
         c_notif = await get_user_notify(self.db_url, user_id)
         c_notif_mute = await get_user_notify_mute(self.db_url, user_id)
-        reply_markup = self.build_settings_keyboard(c_notif, c_notif_mute, user_lang) 
+        reply_markup = self.build_settings_keyboard(c_notif_mute, user_lang) 
         tz = await get_user_timezone(self.db_url, user_id)        
           
         settings_message = self.create_settings_message(c_notif, c_notif_mute, user_lang, tz)
