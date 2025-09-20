@@ -233,7 +233,7 @@ TRANSLATIONS = {
             "settings_timezone": "Set Timezone",
             #"settings_n_on": "♥ On",#⏰
             #"settings_n_off": "💤 Off",
-            "settings_n_mute": "🔔✨ Silent mode",
+            "settings_n_mute": "🔔 Silent mode",
             "settings_n_mute_on": "🔕 Silent mode",
 
             #"settings_message": "<b>✦ Settings ✦</b>\n\n"

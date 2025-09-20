@@ -676,12 +676,27 @@ class SkyShardsBot:
         tz = await get_user_timezone(self.db_url, user_id)
          
         settings_message = self.create_settings_message(c_notif, c_notif_mute, user_lang, tz)
-        await query.edit_message_text(
-            settings_message,
-            parse_mode="HTML",
-            reply_markup=self.build_settings_keyboard(c_notif_mute, user_lang)  
-        )
-        await query.answer()
+
+        old_text = query.message.text
+        new_text = settings_message
+        old_markup = query.message.reply_markup
+        new_markup = self.build_settings_keyboard(c_notif_mute, user_lang)  
+        if old_text != new_text or old_markup != new_markup:
+            await query.edit_message_text(
+                text=new_text,
+                parse_mode="HTML",
+                reply_markup=new_markup
+            )
+        else:            
+            await query.answer()
+
+
+        #await query.edit_message_text(
+        #    settings_message,
+        #    parse_mode="HTML",
+        #    reply_markup=self.build_settings_keyboard(c_notif_mute, user_lang)  
+        #)
+        #await query.answer()
 
 # ----------------- TIMEZONE SELECTION -----------------
     def build_timezone_keyboard(
