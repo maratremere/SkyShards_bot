@@ -292,11 +292,13 @@ class SkyShardsBot:
                     await self.update_loc(chat_id_n)
                     #today_shards = today_shard.print_today_shard() 
                     today_shards = today_shard.print_morning_shard() 
+                    r_key = await self.get_reply_key(chat_id_n) 
                     await self.bot.send_message(
                             chat_id=chat_id_n, 
-                            text=today_shards, 
+                            text=today_shards,
+                            reply_markup=ReplyKeyboardMarkup(r_key, resize_keyboard=True), 
                             parse_mode='HTML'
-                            )                    
+                            )                   
             except Exception as e:
                 logger.warning(f"Failed to send {chat_id_n}: {e}")
 
