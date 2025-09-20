@@ -585,8 +585,8 @@ class SkyShardsBot:
         if text == key_on:
             keyboard = r_key_off
             self.mNotify = True             
-            await set_user_notify(self.db_file, user_id, self.mNotify)
-            await set_user_notify_mute(self.db_file, user_id, False)
+            await set_user_notify(self.db_url, user_id, self.mNotify)
+            await set_user_notify_mute(self.db_url, user_id, False)
             await self.update_loc(user_id)
             mess = localizer.format_message('messages.shards_notif_on')       
             await update.message.reply_text(
@@ -597,7 +597,7 @@ class SkyShardsBot:
         elif text == key_off:
             keyboard = r_key_on
             self.mNotify = False
-            await set_user_notify(self.db_file, user_id, self.mNotify)
+            await set_user_notify(self.db_url, user_id, self.mNotify)
             await self.update_loc(user_id)
             mess = localizer.format_message('messages.shards_notif_off')
             await update.message.reply_text(
