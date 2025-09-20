@@ -486,13 +486,24 @@ class SkyShardsBot:
 
         async def on_startup(application):
             await self.startup(application)
-            await self.set_bot_commands()            
+            await self.set_bot_commands()
+            try:
+                await self.application.bot.delete_webhook()
+                text = "Webhook successfully removed"
+                print(text)
+                logger.info(text)
+            except Exception as e:
+                text = f"Failed to remove webhook: {e}"
+                print(text)
+                logger.warning(text)          
 
         async def on_shutdown(application):
             await self.shutdown(application)
 
         self.application.post_init = on_startup
         self.application.post_shutdown = on_shutdown
+
+        #self.application.bot.delete_webhook()
 
         print("Start bot...")
         self.application.run_polling(allowed_updates=Update.ALL_TYPES)
