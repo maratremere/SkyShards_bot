@@ -73,20 +73,12 @@ TRANSLATIONS = {
             "reward_black": "<b>Награда</b>: 4 Тортика Свечей",
             "reward_m_black": "<b>[4 Тортика]</b>",
             "timezone_info": "<i>Время указано для часового пояса: {timezone}</i>",
-            "shards_notif_on": "Оповещения об Осколках включены",
-            "shards_notif_off": "Оповещения об Осколках приостановлены до завтра",
+            "shards_notif_on": "Оповещения включены",
+            "shards_notif_off": "Оповещения приостановлены до следующих Осколков",
             "shards_notif_mute": "Все оповещения отключены",
             "settings_timezone": "Установить часовой пояс",
-            #"settings_n_on": "♥ Вкл", #❤🕓⏰ 🖤♥ ❤
-            #"settings_n_off": "💤 Выкл",
             "settings_n_mute": "🔔 Тихий режим",#🕯💡🌟 ✨☀️🔅🔆
-            "settings_n_mute_on": "🔕 Тихий режим",
-            
-            #"settings_message": "<b>✦ Настройки ✦</b>\n\n"
-            #                    "➜ Уведомления на сегодня (вкл/выкл)\n"
-            #                    "➜ Тихий режим\n"
-            #                    "➜ Сменить язык (ru/en)\n"
-            #                    "➜ Установить часовой пояс",                                
+            "settings_n_mute_on": "🔕 Тихий режим",                               
             "settings_message_title":"<b>✦ НАСТРОЙКИ ✦</b>\n\n",
             "settings_message_notify":"• Уведомления на сегодня ",
             "settings_message_notify_on":"(вкл)    \n",
@@ -124,8 +116,10 @@ TRANSLATIONS = {
 
         #кнопка
         "BUTTON_TEXTS": {
-            "b_notify_on": "Включить оповещения об Осколках",   
-            "b_notify_off": "Отключить оповещения об Осколках"      
+            #"b_notify_on": "Включить оповещения об Осколках",   
+            #"b_notify_off": "Отключить оповещения об Осколках"      
+            "b_notify_on": "♡ Тьма рассеяна",  #🖤 ❤❤️ ♥ U+2665 + U+FE0E ♥ ❤ ❤️ ♥︎ ❥ ♥︎ ♡ \u2665\uFE0E <3 ✧ <3 ♥︎ ♡ ♥︎ ♥ ♥︎
+            "b_notify_off": "✦ Прогоните тьму" 
         },
         
         #Помощник
@@ -227,20 +221,12 @@ TRANSLATIONS = {
             "reward_black": "<b>Reward</b>: 4 Candle Cake",
             "reward_m_black": "<b>[4 Candle Cake]</b>",
             "timezone_info": "<i>Time shown in local timezone: {timezone}</i>",
-            "shards_notif_on": "Shard notifications enabled",
-            "shards_notif_off": "Shard notifications paused for today",
+            "shards_notif_on": "Notifications enabled",
+            "shards_notif_off": "Notifications paused until next Shards",
             "shards_notif_mute": "All notifications disabled",
             "settings_timezone": "Set Timezone",
-            #"settings_n_on": "♥ On",#⏰
-            #"settings_n_off": "💤 Off",
             "settings_n_mute": "🔔 Silent mode",
-            "settings_n_mute_on": "🔕 Silent mode",
-
-            #"settings_message": "<b>✦ Settings ✦</b>\n\n"
-            #                    "➜ Notifications for today (on/off)\n"
-            #                    "➜ Silent mode\n"
-            #                    "➜ Change language (ru/en)\n"
-            #                    "➜ Set Timezone",                                
+            "settings_n_mute_on": "🔕 Silent mode",                              
             "settings_message_title":"<b>✦ SETTINGS ✦</b>\n\n",
             "settings_message_notify":"• Notifications for today ",
             "settings_message_notify_on":"(on)              \n",
@@ -278,8 +264,10 @@ TRANSLATIONS = {
 
         # button
         "BUTTON_TEXTS": {
-            "b_notify_on": "Enable Shard Notifications",
-            "b_notify_off": "Disable Shard Notifications"
+            #"b_notify_on": "Enable Shard Notifications",
+            #"b_notify_off": "Disable Shard Notifications"
+            "b_notify_on": "♡ Darkness banished",
+            "b_notify_off": "✦ Cleanse the darkness"
         },
         
         #Assistant
