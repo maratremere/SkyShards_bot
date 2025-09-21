@@ -69,9 +69,9 @@ TRANSLATIONS = {
             "darkness_fell": "✦ Тьма опустилась на ",
             "darkness_fell_last": "<i>(осколки скоро исчезнут)</i>",
             "reward_red": "<b>Награда</b>: {amount} Вознесённые Свечки",
-            "reward_m_red": "<b>[{amount} Свечки]</b>",#🎂🕯️
+            "reward_m_red": "[{amount} Свечки]",#🎂🕯️
             "reward_black": "<b>Награда</b>: 4 Тортика Свечей",
-            "reward_m_black": "<b>[4 Тортика]</b>",
+            "reward_m_black": "[4 Тортика]",
             "timezone_info": "<i>Время указано для часового пояса: {timezone}</i>",
             #"shards_notif_on": "Оповещения включены",
             #"shards_notif_off": "Оповещения приостановлены до следующих Осколков",
@@ -220,9 +220,9 @@ TRANSLATIONS = {
             "darkness_fell": "✦ Darkness has fallen upon ",
             "darkness_fell_last": "<i>(the shards will soon disappear)</i>",
             "reward_red": "<b>Reward</b>: {amount} Ascended Candles",
-            "reward_m_red": "<b>[{amount} Candles]</b>",            
+            "reward_m_red": "[{amount} Candles]",            
             "reward_black": "<b>Reward</b>: 4 Candle Cake",
-            "reward_m_black": "<b>[4 Candle Cake]</b>",
+            "reward_m_black": "[4 Candle Cake]",
             "timezone_info": "<i>Time shown in local timezone: {timezone}</i>",
             #"shards_notif_on": "Notifications enabled",
             #"shards_notif_off": "Notifications paused until next Shards",
