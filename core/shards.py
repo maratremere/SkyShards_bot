@@ -129,15 +129,15 @@ class ShardInfoPrint:
             time_strings.append(f"{land}-{end}")            
         return time_strings
 
-    #Информация утром с     осколками   
+    #Информация утром с ◊осколками   
     def _print_morning_shards(self) -> str:  
         shard_type = self.loc.get_shard_type(self.info.is_red)
         realm_name = self.loc.get_realm_name(self.info.realm)
         map_name = self.loc.get_map_name(self.info.map_name)
 
-        main_info = f"{shard_type} {map_name} \n({realm_name})"
+        main_info = f"{shard_type} {map_name} ({realm_name})"
         if self.loc.language == lang.EN:
-            main_info = f"{shard_type} in {map_name} \n({realm_name})"
+            main_info = f"{shard_type} in {map_name} ({realm_name})"
 
         rewards_info = self._format_morning_shard_rewards() 
         times_info = self._format_morning_shard_times()
