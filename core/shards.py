@@ -135,15 +135,15 @@ class ShardInfoPrint:
         realm_name = self.loc.get_realm_name(self.info.realm)
         map_name = self.loc.get_map_name(self.info.map_name)
 
-        main_info = f"{shard_type} {map_name} \n({realm_name})"
+        main_info = f"{shard_type} {map_name} ({realm_name})"
         if self.loc.language == lang.EN:
-            main_info = f"{shard_type} in {map_name} \n({realm_name})"
+            main_info = f"{shard_type} in {map_name} ({realm_name})"
 
         rewards_info = self._format_morning_shard_rewards() 
         times_info = self._format_morning_shard_times()
         times_str = " | ".join(times_info)               
 
-        main_text = f"{main_info}   ◊ {rewards_info}\n{times_str}"#● • ◊
+        main_text = f"{main_info}  ◊ {rewards_info}\n{times_str}"#● • ◊
         return main_text
 
     #Выводит утреннее сообщение
