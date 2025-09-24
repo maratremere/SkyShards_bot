@@ -50,7 +50,7 @@ from core.db_utils import (
 )
 
 from core.logger import logger
-from core.models import (
+from core.shards import (
     get_shard_info, 
     ShardInfoPrint, 
     get_shard_times_land, 
@@ -97,9 +97,6 @@ class SkyShardsBot:
             await set_user_language(self.db_url, user_id, chosen_lang)
         
         #Ищем часовой пояс пользователя в базе
-        #tz = await get_user_timezone(self.db_url, user_id)
-        #if tz is None:
-        #    tz = LOCAL_TIMEZONE    
         tz = await self.update_tz(user_id)    
         
         #Значение настройки напоминаний
