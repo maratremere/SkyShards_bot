@@ -13,7 +13,7 @@ It sends notifications when shards begin to fall, helping players stay informed 
 - **Notifications 30 minutes before the event ends**  
 - **Manage notifications and settings** directly in the bot  
 - **Change language** and **set your time zone**
-
+- **“Cleanse the darkness” button** — allows you to pause notifications for the current day. After pressing it, the button changes to *“Darkness banished”*, and you can press it again to resume notifications for the same day.
 ---
 
 ## Commands
@@ -38,12 +38,13 @@ It sends notifications when shards begin to fall, helping players stay informed 
 1. Add the bot in Telegram.  
 2. Use the `/start` command to begin.  
 3. Configure notifications with `/notif_on`, `/notif_off` and `/notif_mute`.  
-4. Set your preferred language using `/change_language`.  
-5. Set your local time zone using `/set_timezone`.  
-6. Use `/info` to get today's Shard information.  
-7. Access `/settings` for advanced options.  
-8. Use `/help` to see the list of available commands.
-9. Use `/about` to view information about the bot, its purpose, and the developer.
+4. If needed, use the **“Cleanse the darkness”** button to temporarily disable notifications for the current day. The button will change to **“Darkness banished”**, and pressing it again will resume notifications.  
+5. Set your preferred language using `/change_language`.  
+6. Set your local time zone using `/set_timezone`.  
+7. Use `/info` to get today's Shard information.  
+8. Access `/settings` for advanced options.  
+9. Use `/help` to see the list of available commands.
+10. Use `/about` to view information about the bot, its purpose, and the developer.
 ---
 
 ## Information Source
