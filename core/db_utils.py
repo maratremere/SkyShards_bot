@@ -201,3 +201,58 @@ async def get_user_notify_mute(db_url: str, user_id: int) -> bool:
 async def set_user_notify_mute(db_url: str, user_id: int, notify_mute: bool) -> None:
     loop = asyncio.get_running_loop()
     await loop.run_in_executor(None, set_user_notify_mute_sync, db_url, user_id, notify_mute)
+
+# ------- delete user -------
+def delete_user_sync(db_url: str, user_id: int) -> None:
+    conn = get_connection(db_url)
+    cur = conn.cursor()
+    cur.execute("DELETE FROM chats WHERE user_id = %s", (user_id,))
+    conn.commit()
+    cur.close()
+    conn.close()
+
+async def delete_user(db_url: str, user_id: int) -> None:
+    loop = asyncio.get_running_loop()
+    await loop.run_in_executor(None, delete_user_sync, db_url, user_id)
+
+# ------- cleanup inactive users -------
+def cleanup_inactive_users_sync(db_url: str, days: int = 90) -> int:
+    """
+    Удаляет пользователей, которые не появлялись в боте указанное количество дней
+    Возвращает количество удалённых строк
+    """
+    conn = get_connection(db_url)
+    cur = conn.cursor()
+    cur.execute(
+        """
+        DELETE FROM chats
+        WHERE last_seen IS NOT NULL
+        AND last_seen::timestamptz < (NOW() - INTERVAL '%s days')
+        """,
+        (days,)
+    )
+    deleted_count = cur.rowcount
+    conn.commit()
+    cur.close()
+    conn.close()
+    return deleted_count
+
+async def cleanup_inactive_users(db_url: str, days: int = 90) -> int:
+    loop = asyncio.get_running_loop()
+    return await loop.run_in_executor(None, cleanup_inactive_users_sync, db_url, days)
+
+# ----------------- last_seen -----------------
+def get_user_last_seen_sync(db_url: str, user_id: int) -> datetime | None:
+    conn = get_connection(db_url)
+    cur = conn.cursor()
+    cur.execute("SELECT last_seen FROM chats WHERE user_id = %s", (user_id,))
+    row = cur.fetchone()
+    cur.close()
+    conn.close()
+    if row and row[0]:
+        return datetime.fromisoformat(row[0])
+    return None
+
+async def get_user_last_seen(db_url: str, user_id: int) -> datetime | None:
+    loop = asyncio.get_running_loop()
+    return await loop.run_in_executor(None, get_user_last_seen_sync, db_url, user_id)

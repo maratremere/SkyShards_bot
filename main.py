@@ -16,7 +16,7 @@ from telegram.ext import (
     ContextTypes,
     filters,
 )
-from telegram.error import NetworkError, Conflict
+from telegram.error import NetworkError, Conflict, Forbidden
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 from datetime import datetime, timedelta, time
@@ -51,6 +51,8 @@ from core.db_utils import (
     set_user_notify,
     get_user_notify_mute,
     set_user_notify_mute,
+    delete_user,
+    get_user_last_seen
 )
 
 from core.logger import logger
@@ -101,7 +103,8 @@ class SkyShardsBot:
             await set_user_language(self.db_url, user_id, chosen_lang)
         
         #Ищем часовой пояс пользователя в базе
-        tz = await self.update_tz(user_id)    
+        #tz = await self.update_tz(user_id)    
+        tz = await get_user_timezone(self.db_url, user_id)
         
         #Значение настройки напоминаний
         c_notif = await get_user_notify(self.db_url, user_id)
@@ -121,8 +124,12 @@ class SkyShardsBot:
             hello_m,
             reply_markup=ReplyKeyboardMarkup(r_key, resize_keyboard=True) 
         )
-        self.refresh_today_shard(tz) 
-        today_shard = ShardInfoPrint(self.mShard_info, tz)
+        tz_local = tz
+        if tz_local is None:
+            tz_local = LOCAL_TIMEZONE
+
+        self.refresh_today_shard(tz_local) 
+        today_shard = ShardInfoPrint(self.mShard_info, tz_local)
         text_shard = today_shard.print_today_shard()
         await self.bot.send_message(chat_id=user_id, text=text_shard, parse_mode='HTML')
 
@@ -134,6 +141,9 @@ class SkyShardsBot:
             tx1 = localizer.format_message('messages.tz_select')
             tz_text = f"<i>{tx1} <b>/set_timezone</b></i>"
         await self.bot.send_message(chat_id=user_id, text=tz_text, parse_mode='HTML')
+
+        ##############################
+        #await self.check_alive_users()
 
 # -------------------------------------------------------
     #обновить и вернуть текст кнопки
@@ -267,6 +277,69 @@ class SkyShardsBot:
         self.mShard_info = get_shard_info(current_date)# + timedelta(days=0)
         return 
     
+    #проверка всех пользователей
+    async def check_alive_users(self):
+        chat_ids = await get_all_chat_ids(self.db_url)
+        if not chat_ids:
+            return
+        for chat_id in chat_ids:
+            try:
+                #пробуем "пинг" без реального текста
+                await self.bot.send_chat_action(chat_id=chat_id, action="typing")
+            except Forbidden as e:
+                err_text = str(e).lower()
+                if "blocked" in err_text or "deactivated" in err_text:
+                    text = f"User {chat_id} is inactive ({e}). Deleting..."
+                    print(text)
+                    logger.warning(text)
+                    await delete_user(self.db_url, chat_id)
+                else:
+                    text = f"Forbidden for {chat_id}, but not deleting: {e}"
+                    print(text)
+                    logger.warning(text)
+            except Exception as e:
+                # другие ошибки (например, сеть) не удаляем
+                text = f"Check alive failed for {chat_id}: {e}"
+                print(text)
+                logger.warning(text)
+
+    #проверяет пользователей, которые не появлялись в боте 90 дней        
+    async def cleanup_inactive(self, days: int = 90):
+        chat_ids = await get_all_chat_ids(self.db_url)
+        if not chat_ids:
+            return
+
+        for chat_id in chat_ids:
+            try:
+                last_seen = await get_user_last_seen(self.db_url, chat_id)
+                if not last_seen:
+                    continue
+                if last_seen < datetime.now(pytz.timezone(LOCAL_TIMEZONE)) - timedelta(days=days):
+                    #Получаем язык пользователя для локализации
+                    user_lang = await self.update_loc(chat_id)
+                    #Формируем локализованное сообщение
+                    message = localizer.format_message('messages.inactive_cleanup_notification', days=days)
+                    #Пытаемся уведомить пользователя
+                    try:
+                        await self.bot.send_message(
+                            chat_id=chat_id,
+                            text=message,
+                            parse_mode="HTML"
+                        )
+                    except Forbidden:
+                        #Пользователь заблокировал или удалён — просто удаляем
+                        pass
+
+                    #Удаляем запись из базы
+                    await delete_user(self.db_url, chat_id)
+                    text = f"🧹 Removed inactive user {chat_id} (> {days} days)"
+                    print(text)
+                    logger.info(text)
+            except Exception as e:
+                text = f"Cleanup failed for {chat_id}: {e}"
+                print(text)
+                logger.warning(text)
+    
 # ----------------- Напоминания -----------------
     #Ежедневное утреннее уведомление в 11:00 по Asia/Tbilisi
     #Ежедневное утреннее уведомление в 00:00 по America/Los_Angeles
@@ -390,9 +463,10 @@ class SkyShardsBot:
         self.scheduler.add_job(
             self.morning_message,
             CronTrigger(hour=0, minute=0, second=50, timezone=tz),#tz = TIMEZONE
-            #CronTrigger(hour=13, minute=53, second=00, timezone='Asia/Tbilisi'),
+            #CronTrigger(hour=19, minute=55, second=00, timezone='Asia/Tbilisi'),
             id='morning_message'  
             )
+
 
 # -------------------------------------------------------
     def setup_handlers(self):
@@ -505,8 +579,29 @@ class SkyShardsBot:
         print("Waiting 5 seconds to ensure previous bot instance stopped...")
         t.sleep(5)
         # ----------------------------
+
+        #Ежедневные напоминания про осколки (ежедневно в 00:00 по TIMEZONE = 'America/Los_Angeles')
         self.setup_schedule() 
-        self.scheduler.add_job(self.setup_schedule, CronTrigger(hour=0, minute=0, timezone=TIMEZONE))
+        self.scheduler.add_job(
+            self.setup_schedule, 
+            CronTrigger(hour=0, minute=0, timezone=TIMEZONE)
+        )
+        
+        #проверяет пользователей, которые не появлялись в боте 90 дней (в вск в 03:30 по LOCAL_TIMEZONE)
+        self.scheduler.add_job(
+            self.cleanup_inactive,
+            CronTrigger(day_of_week="sun", hour=3, minute=30, timezone=LOCAL_TIMEZONE),
+            #CronTrigger(day_of_week="mon", hour=18, minute=48, timezone=LOCAL_TIMEZONE),
+            id="cleanup_inactive"
+        )
+        
+        #Проверка пользователей на живость (ежедневно в 03:00 по LOCAL_TIMEZONE = 'Europe/Moscow')
+        self.scheduler.add_job(
+            self.check_alive_users,
+            CronTrigger(hour=3, minute=0, timezone=LOCAL_TIMEZONE),
+            id="check_alive_users"
+        )
+
         self.setup_handlers()
         self.application.add_error_handler(self.error_handler)
 

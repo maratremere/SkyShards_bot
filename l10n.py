@@ -105,7 +105,10 @@ TRANSLATIONS = {
             "tz_save":"Часовой пояс сохранен: ",
             "tz_set":"Введите часть названия часового пояса или города (например, 'Los_Angeles' или 'Europe'):",
             "tz_cancel2":"Выбор отменен",
-            "tz_search2":"Результаты поиска:"
+            "tz_search2":"Результаты поиска:",
+            "inactive_cleanup_notification":"Привет! ♥\nМы заметили, что вы не пользовались ботом последние {days} дней.\n"
+                                            "Для оптимизации ваша запись была удалена из базы данных.\nЧтобы снова пользоваться ботом, "
+                                            "просто отправьте команду /start — и можно снова пользоваться ботом!"
         },
 
         #Пункты меню
@@ -256,7 +259,10 @@ TRANSLATIONS = {
             "tz_save":"Timezone saved: ",
             "tz_set":"Please enter part of a time zone or city name (e.g. 'Los_Angeles' or 'Europe'):",
             "tz_cancel2":"Select cancelled",
-            "tz_search2":"Search results:"
+            "tz_search2":"Search results:", 
+            "inactive_cleanup_notification":"Hello! ♥\nWe noticed you haven’t used the bot for the past {days} days.\n"
+                                            "To keep things tidy, your data has been removed from the database.\nTo start using the bot again, "
+                                            "simply send the /start command — and you can use the bot again!"
         },
 
         #Menu  items
