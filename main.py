@@ -27,6 +27,7 @@ import os
 import re
 import traceback
 import asyncio
+import time as t
 
 from config import (
     BOT_TOKEN, 
@@ -483,23 +484,27 @@ class SkyShardsBot:
         #Если это именно NetworkError
         if isinstance(err, NetworkError):
             logger.warning("🌐 Network error, bot will retry automatically...")
-        # Если это Conflict (другой экземпляр polling)
+        #Если это Conflict (другой экземпляр polling)
         elif isinstance(err, Conflict):
             text = "⚠️ Conflict detected: another bot instance is running. Waiting 5s before retry..."
             logger.warning(text)
             print(text)
-            # Просто ждём, не падаем
-            
+            #Просто ждём, не падаем            
             await asyncio.sleep(5)
         #Полный traceback (удобно в отладке)
         tb = "".join(traceback.format_exception(type(err), err, err.__traceback__))
         text = f"Full traceback:\n{tb}"
         #logger.debug("Full traceback:\n%s", tb)
         print(text) 
-        logger.debug(text)                     
+        logger.debug(text)                
 
 # ----------------- RUN -----------------
     def run(self):
+        # ----------------------------
+        # Ждём 5 секунд, чтобы старый контейнер успел завершиться
+        print("Waiting 5 seconds to ensure previous bot instance stopped...")
+        t.sleep(5)
+        # ----------------------------
         self.setup_schedule() 
         self.scheduler.add_job(self.setup_schedule, CronTrigger(hour=0, minute=0, timezone=TIMEZONE))
         self.setup_handlers()
