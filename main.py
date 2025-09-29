@@ -16,6 +16,7 @@ from telegram.ext import (
     ContextTypes,
     filters,
 )
+from telegram.error import NetworkError
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 from datetime import datetime, timedelta, time
@@ -24,6 +25,7 @@ import pytz
 import math
 import os
 import re
+import traceback
 
 from config import (
     BOT_TOKEN, 
@@ -462,11 +464,34 @@ class SkyShardsBot:
         if self.scheduler.running:
             self.scheduler.shutdown(wait=False)
 
+    #async def error_handler(self, update, context):
+    #    if isinstance(context.error, NetworkError):
+    #        text = f"Network error, will retry automatically..."
+    #        print(text)
+    #        logger.warning(text)    
+
+    async def error_handler(update, context):
+        err = context.error
+        #Тип ошибки и её текст
+        logger.error(f"⚠️ Exception type: {type(err)}")
+        logger.error(f"⚠️ Exception message: {err}")
+        #Если это именно NetworkError
+        if isinstance(err, NetworkError):
+            logger.warning("🌐 Network error, bot will retry automatically...")
+        #Полный traceback (удобно в отладке)
+        tb = "".join(traceback.format_exception(type(err), err, err.__traceback__))
+        logger.debug("Full traceback:\n%s", tb)
+        #Можно также вывести в консоль
+        print("⚠️ Exception type:", type(err))
+        print("⚠️ Exception message:", err)
+        print("Full traceback:\n", tb)        
+
 # ----------------- RUN -----------------
     def run(self):
         self.setup_schedule() 
         self.scheduler.add_job(self.setup_schedule, CronTrigger(hour=0, minute=0, timezone=TIMEZONE))
         self.setup_handlers()
+        self.application.add_error_handler(self.error_handler)
 
         async def on_startup(application):
             await self.startup(application)
@@ -489,7 +514,8 @@ class SkyShardsBot:
         #self.application.bot.delete_webhook()
 
         print("Start bot...")
-        self.application.run_polling(allowed_updates=Update.ALL_TYPES)
+        self.application.run_polling(allowed_updates=Update.ALL_TYPES)       
+
 # -------------------------------------------------------
 
 # ----------------- МЕНЮ И КНОПКИ НАСТРОЕК -----------------
