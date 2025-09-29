@@ -470,7 +470,7 @@ class SkyShardsBot:
     #        print(text)
     #        logger.warning(text)    
 
-    async def error_handler(update, context):
+    async def error_handler(self, update, context):
         err = context.error
         #Тип ошибки и её текст
         logger.error(f"⚠️ Exception type: {type(err)}")
