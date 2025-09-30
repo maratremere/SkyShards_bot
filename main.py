@@ -228,6 +228,39 @@ class SkyShardsBot:
         logger.info(f"/info - {user_id} - {tz}")
         today_shard_text = today_shard.render()
         await self.bot.send_message(chat_id=user_id, text=today_shard_text, parse_mode='HTML')
+  
+    #Доступные команды
+    async def help_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        user_id = update.effective_user.id
+        await self.update_loc(user_id)        
+        help = localizer.format_message('help_message')
+        await self.bot.send_message(chat_id=user_id, text=help, parse_mode='HTML')        
+
+    #О программе
+    async def about_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        user_id = update.effective_user.id
+        await self.update_loc(user_id)   
+        about = localizer.format_message('about_message')
+        about2 = localizer.format_message('about_message2')
+        image_path = "image/image.png"
+        if os.path.exists(image_path):
+            #Если файл найден — отправляем картинку
+            with open(image_path, "rb") as photo:
+                await self.bot.send_photo(
+                    chat_id=user_id,
+                    photo=photo,
+                    caption=about,
+                    parse_mode="HTML"
+                )
+        else:
+            await self.bot.send_message(chat_id=user_id, text=about, parse_mode="HTML") 
+
+        await self.bot.send_message(
+            chat_id=user_id, 
+            text=about2, 
+            parse_mode="HTML",
+            disable_web_page_preview=True
+        )    
 
     #обновить язык из базы
     async def update_loc(self, user_id: int):        
@@ -245,31 +278,6 @@ class SkyShardsBot:
         if tz is None:
             tz = LOCAL_TIMEZONE 
         return tz
-
-    #Доступные команды
-    async def help_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        user_id = update.effective_user.id
-        await self.update_loc(user_id)        
-        help = localizer.format_message('help_message')
-        await self.bot.send_message(chat_id=user_id, text=help, parse_mode='HTML')        
-
-    #О программе
-    async def about_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        user_id = update.effective_user.id
-        await self.update_loc(user_id)   
-        help = localizer.format_message('about_message')
-        image_path = "image/image.png"
-        if os.path.exists(image_path):
-            #Если файл найден — отправляем картинку
-            with open(image_path, "rb") as photo:
-                await self.bot.send_photo(
-                    chat_id=user_id,
-                    photo=photo,
-                    caption=help,
-                    parse_mode="HTML"
-                )
-        else:
-            await self.bot.send_message(chat_id=user_id, text=help, parse_mode="HTML") 
 
     #обновление осколков
     def refresh_today_shard(self, tz: str):        

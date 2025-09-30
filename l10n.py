@@ -64,7 +64,8 @@ TRANSLATIONS = {
         
         #Текстовые сообщения
         "messages": {#ПРИВЕТСТВУЮ ДОБРО ПОЖАЛОВАТЬ
-            "hello_message": "ПРИВЕТСТВУЮ В SKY SHARDS BOT ✦\n\nЯ буду присылать уведомление о появлении осколков в игре “Sky: Children of the Light”",
+            "hello_message": "ПРИВЕТСТВУЮ В SKY SHARDS BOT ✦\n\nЯ буду присылать уведомление о появлении осколков"
+                            " в игре “Sky: Children of the Light”",
             "p_no_shard": "Сегодня нет ✦ осколков",
             "darkness_fell": "✦ Тьма опустилась на ",
             "darkness_fell_last": "<i>(осколки скоро исчезнут)</i>",
@@ -107,7 +108,8 @@ TRANSLATIONS = {
             "tz_cancel2":"Выбор отменен",
             "tz_search2":"Результаты поиска:",
             "inactive_cleanup_notification":"Привет! ♥\nМы заметили, что вы не пользовались ботом последние {days} дней.\n"
-                                            "Для оптимизации ваша запись была удалена из базы данных.\nЧтобы снова пользоваться ботом, "
+                                            "Для оптимизации ваша запись была удалена из базы данных.\n"
+                                            "Чтобы снова пользоваться ботом, "
                                             "просто отправьте команду /start — и можно снова пользоваться ботом!"
         },
 
@@ -145,20 +147,34 @@ TRANSLATIONS = {
         #О программе
         "about_message": 
         "<b>SKY SHARDS BOT</b>\n\n"
-            "Вычисляет цвет, время и местоположение <b>Извержения Осколков</b> в игре “Sky: Children of the Light”\n\n"
+            "Вычисляет цвет, время и местоположение <b>Извержений Осколков</b> в игре “Sky: Children of the Light”\n\n"
             "Отправляет уведомления в момент начала падения Осколков, помогая быть в курсе событий и успевать реагировать\n\n"
-            'Информация основана на вычислениях в веб-приложения <b><a href="https://sky-shards.pages.dev/">Sky Shards</a></b>\n\n'
+            "Информация основана на вычислениях веб-приложения "
+            '<b><a href="https://sky-shards.pages.dev/">Sky Shards</a></b>\n\n'
             "✦✦✦✦✦✦✦✦✦✦✦✦✦\n\n"
             "<b>Sky Shards bot отправляет два вида уведомлений:</b>\n"
             "• ежедневные уведомления о текущих Осколках в момент обновления дня в Sky\n"
-            "• уведомление во время начала Извержения Осколков и за 30 минут до окончания события\n\n"
-            "В меню “Настройки” вы можете отключить уведомления на сегодняшний день или включить Тихий режим, "
-            "при котором все уведомления от бота будут отключены. Здесь также можно изменить язык и установить часовой пояс\n\n"
-            "При первом запуске рекомендуется выбрать локальный часовой пояс для корректной работы уведомлений\n\n"
+            "• уведомление о начале Извержения Осколков и за 30 минут до окончания события\n\n"
+            "В меню “Настройки” вы можете включить Тихий режим, "
+            "при котором все уведомления от бота будут отключены. Также можно изменить язык и установить часовой пояс\n\n"
+            "Кнопка “Прогоните тьму” позволяет отключить уведомления на сегодняшний день, "
+            "а кнопка “Тьма рассеяна” восстанавливает сегодняшние оповещения\n\n"
+            "При первом запуске рекомендуется выбрать локальный часовой пояс для корректной работы уведомлений\n\n",
+            
+        #О программе часть два
+        "about_message2": 
             "_______\n\n"
             "<i>Бот создан исключительно в информационно-ознакомительных и развлекательных целях</i>\n\n"
-            "<i>Данное приложение не связано с ThatGameCompany и Sky: Дети Света</i>\n\n"
-            'Разработчик: <b>maratremere</b>\n<b><a href="https://github.com/maratremere/SkyShards_bot">Исходники на GitHub</a></b>'
+            "<i>Данное приложение не связано с ThatGameCompany и Sky: Дети Света</i>\n"
+            "_______\n\n"            
+            "<b>Обратная связь</b>\n\n"
+            "Если у вас есть идеи, отзывы или вы обнаружили ошибку — пожалуйста, "
+            "присылайте их на почту <b>maratremere@gmail.com</b>\n\n"
+            "Разработчик: <b>maratremere</b>\n"
+            '<b><a href="https://github.com/maratremere/SkyShards_bot">Исходники на GitHub</a></b>'
+            
+            
+
          
     },
     
@@ -218,7 +234,8 @@ TRANSLATIONS = {
         
         #Text messages
         "messages": {
-            "hello_message": "WELCOME TO SKY SHARDS BOT ✦\n\nI will send you notifications about Shard Eruptions in the game “Sky: Children of the Light”",
+            "hello_message": "WELCOME TO SKY SHARDS BOT ✦\n\nI will send you notifications about "
+                            "Shard Eruptions in the game “Sky: Children of the Light”",
             "p_no_shard": "No ✦ shards today",
             "darkness_fell": "✦ Darkness has fallen upon ",
             "darkness_fell_last": "<i>(the shards will soon disappear)</i>",
@@ -261,7 +278,8 @@ TRANSLATIONS = {
             "tz_cancel2":"Select cancelled",
             "tz_search2":"Search results:", 
             "inactive_cleanup_notification":"Hello! ♥\nWe noticed you haven’t used the bot for the past {days} days.\n"
-                                            "To keep things tidy, your data has been removed from the database.\nTo start using the bot again, "
+                                            "To keep things tidy, your data has been removed from the database.\n"
+                                            "To start using the bot again, "
                                             "simply send the /start command — and you can use the bot again!"
         },
 
@@ -301,19 +319,30 @@ TRANSLATIONS = {
         "about_message": 
             "<b>SKY SHARDS BOT</b>\n\n"
             "Calculates the color, timing and location of <b>Shard Eruptions</b> in the game “Sky: Children of the Light”\n\n"
-            "Sends notifications when Shards begin to fall, helping stay informed and prepared\n\n"
-            'Information is based on calculations from the web app <b><a href="https://sky-shards.pages.dev/">Sky Shards</a></b>\n\n'
+            "Sends notifications when Shards begin to fall, helping you stay informed and prepared\n\n"
+            "Information is based on calculations from the web app " 
+            '<b><a href="https://sky-shards.pages.dev/">Sky Shards</a></b>\n\n'
             "✦✦✦✦✦✦✦✦✦✦✦✦✦\n\n"
             "<b>Sky Shards bot sends two types of notifications:</b>\n"
             "• daily notifications about Shards at the start of the new Sky day\n"
             "• notifications when a Shard Eruption begins, and another one 30 minutes before the event ends\n\n"
-            "In the “Settings” menu, you can disable notifications for today or enable Silent Mode, "
-            "which turns off all notifications from the bot. You can also change the language and set the time zone here\n\n"
-            "It is recommended to select your local time zone on the first launch to ensure correct notification times\n\n"
+            "In the “Settings” menu, you can enable Silent Mode, "
+            "which turns off all notifications from the bot. You can also change the language and set the time zone there\n\n"
+            "The “Cleanse the darkness” button allows you to disable notifications for today, "  
+            "while the “Darkness banished” button lets you restore today’s notifications\n\n"
+            "It is recommended to select your local time zone on the first launch to ensure correct notification times\n\n",
+            
+        #About part 2
+        "about_message2": 
             "_______\n\n"            
             "<i>This bot was created solely for informational, educational, and entertainment purposes</i>\n\n"
-            "<i>This application is not affiliated with ThatGameCompany or Sky: Children of the Light</i>\n\n"
-            'Developer: <b>maratremere</b>\n<b><a href=\"https://github.com/maratremere/SkyShards_bot">Source on GitHub</a></b>'
+            "<i>This application is not affiliated with ThatGameCompany or Sky: Children of the Light</i>\n"
+            "_______\n\n"
+            "<b>Feedback & Issues</b>\n\n"
+            "If you have ideas, feedback, or find a bug — please send everything to email <b>maratremere@gmail.com</b>\n\n"
+            "Developer: <b>maratremere</b>\n"
+            '<b><a href=\"https://github.com/maratremere/SkyShards_bot">Source on GitHub</a></b>'
+            
         
     }
 }
